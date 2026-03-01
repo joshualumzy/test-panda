@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Josh | AI Architect</title>
+    <title>Josh | AI Systems Architect</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lenis@1.0.45/dist/lenis.min.js"></script>
@@ -12,79 +12,80 @@
     <link href="https://fonts.googleapis.com/css2?family=Geist:wght@100;400;900&display=swap" rel="stylesheet">
 
     <style>
-        body { background: #000; color: #fff; margin: 0; overflow-x: hidden; font-family: 'Geist', sans-serif; }
-        
+        :root { --accent: #3b82f6; --bg: #050505; }
+        body { background: var(--bg); color: #fff; margin: 0; overflow-x: hidden; font-family: 'Geist', sans-serif; }
+
         #viewport {
             position: relative; height: 100vh; width: 100%;
             overflow: hidden; display: flex; align-items: center; justify-content: center;
+            perspective: 1200px;
         }
 
         .layer {
-            position: absolute; width: 100%; height: 100vh;
-            display: flex; align-items: center; justify-content: center;
-            will-change: transform, opacity;
+            position: absolute; display: flex; align-items: center; justify-content: center;
+            will-change: transform, opacity; transform-style: preserve-3d;
         }
 
-        /* 1. THE DATA CORE (Deepest) */
-        .core-glow {
-            width: 50vw; height: 50vw;
-            background: radial-gradient(circle, #fff 0%, #6366f1 30%, transparent 70%);
-            filter: blur(100px); opacity: 0.7; z-index: 1;
-        }
-
-        /* 2. THE DIGITAL HORIZON (Cybercity/Grid) */
-        .img-grid {
-            width: 120%; height: 120%; object-fit: cover;
-            filter: grayscale(1) invert(1) brightness(0.15) opacity(0.3); z-index: 2;
-        }
-
-        /* 3. THE NEURAL NODE (Avatar Replacement) */
-        .neural-orb {
-            width: 25vw; height: 25vw;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+        /* 1. THE DATA ORB (The Marble) */
+        #data-orb {
+            width: 40px; height: 40px;
+            background: radial-gradient(circle at 30% 30%, #fff, var(--accent));
             border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            z-index: 3;
-            box-shadow: 0 0 50px rgba(99, 102, 241, 0.2);
+            box-shadow: 0 0 30px var(--accent), inset 0 0 10px #fff;
+            z-index: 10;
         }
 
-        /* 4. FLOATING CODE (Foreground) */
-        .code-fragment {
-            font-family: monospace; font-size: 10vw; font-weight: 900;
-            color: rgba(255, 255, 255, 0.05); z-index: 4;
-            white-space: nowrap; pointer-events: none;
+        /* 2. THE GLASS PIPELINES */
+        .glass-pipe {
+            width: 300px; height: 300px;
+            border: 2px solid rgba(255,255,255,0.1);
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 70%);
+            backdrop-filter: blur(5px);
         }
 
-        .glass { background: rgba(255,255,255,0.02); backdrop-filter: blur(40px); border: 1px solid rgba(255,255,255,0.05); border-radius: 2rem; }
+        /* 3. LOGIC GATES (Prisms) */
+        .logic-gate {
+            width: 150px; height: 150px;
+            border: 1px solid rgba(255,255,255,0.2);
+            background: rgba(255,255,255,0.02);
+            transform: rotateX(45deg) rotateY(45deg);
+        }
+
+        /* 4. THE EMITTER (Osmo Sun) */
+        #emitter {
+            position: absolute; width: 60vw; height: 60vw;
+            background: radial-gradient(circle, #fff 0%, var(--accent) 30%, transparent 70%);
+            filter: blur(80px); opacity: 0; z-index: 1;
+        }
+
+        .glass-card { background: rgba(255,255,255,0.02); backdrop-filter: blur(40px); border: 1px solid rgba(255,255,255,0.05); }
+        html.lenis { height: auto; }
     </style>
 </head>
 <body>
 
-    <nav class="fixed top-0 w-full p-10 flex justify-between items-center z-[100]">
+    <nav class="fixed top-0 w-full p-10 flex justify-between items-center z-[100] mix-blend-difference">
         <span class="font-black text-2xl tracking-tighter uppercase">Josh.AI</span>
         <div class="space-x-12 text-xs font-bold tracking-[0.4em] opacity-40 uppercase">
-            <a href="#about">Architecture</a>
-            <a href="#lab">Laboratory</a>
-            <a href="#connect">Initialize</a>
+            <a href="#about" class="hover:opacity-100 transition">Systems</a>
+            <a href="#lab" class="hover:opacity-100 transition">Lab</a>
         </div>
     </nav>
 
     <section id="viewport">
-        <div class="layer"><div class="core-glow" id="core"></div></div>
-        
-        <div class="layer">
-            <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2000" class="img-grid" id="grid">
+        <div id="emitter"></div>
+
+        <div class="layer" id="layer-funnel" style="z-index: 5;">
+            <div class="glass-pipe" style="transform: scale(1.5);"></div>
         </div>
 
-        <div class="layer">
-            <div class="neural-orb" id="node">
-                <span class="text-white/20 text-xs tracking-widest uppercase">Node 0x1</span>
-            </div>
+        <div class="layer" id="layer-gate" style="z-index: 4;">
+            <div class="logic-gate"></div>
         </div>
 
-        <div class="layer" id="code-layer">
-            <div class="code-fragment">010110 011001 110101</div>
+        <div class="layer" id="layer-orb">
+            <div id="data-orb"></div>
         </div>
 
         <div class="absolute bottom-20 w-full text-center z-50" id="hero-tag">
@@ -96,33 +97,34 @@
     </section>
 
     <main class="max-w-7xl mx-auto px-10 space-y-64 pb-64 relative z-10">
+        
         <section id="about" class="pt-40 reveal">
             <h2 class="text-xs font-bold tracking-[0.5em] text-slate-500 mb-10 uppercase">01. The Architect</h2>
             <p class="text-5xl md:text-8xl font-black leading-[0.85] tracking-tighter uppercase text-white">
-                BUILDING<br>IN THE<br>LATENT.
+                Orchestrating<br>Intelligence.
             </p>
             <p class="text-2xl text-slate-400 mt-10 max-w-2xl font-light">
-                I translate high-dimensional neural logic into production-grade systems. I build at the intersection of architecture and intent.
+                I build the Rube Goldberg machines of the digital age—connecting disparate models, vectors, and agents into seamless production systems.
             </p>
         </section>
 
         <section id="lab" class="reveal">
             <h2 class="text-xs font-bold tracking-[0.5em] text-slate-500 mb-16 uppercase">02. The Lab</h2>
             <div class="grid md:grid-cols-2 gap-10">
-                <div class="glass p-16 hover:bg-white hover:text-black transition-all duration-700">
-                    <h3 class="text-6xl font-black mb-8 tracking-tighter uppercase">AETHER</h3>
-                    <p class="text-xl opacity-60">Real-time LLM orchestration for physics-based environments.</p>
+                <div class="glass-card p-16 hover:bg-white hover:text-black transition-all duration-700">
+                    <h3 class="text-5xl font-black mb-8">AETHER</h3>
+                    <p class="text-xl opacity-60">LLM-driven task orchestration for complex web workflows.</p>
                 </div>
-                <div class="glass p-16 hover:bg-white hover:text-black transition-all duration-700">
-                    <h3 class="text-6xl font-black mb-8 tracking-tighter uppercase">MERCURY</h3>
-                    <p class="text-xl opacity-60">Edge-serving of quantized models for sub-10ms inference.</p>
+                <div class="glass-card p-16 hover:bg-white hover:text-black transition-all duration-700">
+                    <h3 class="text-5xl font-black mb-8">MERCURY</h3>
+                    <p class="text-xl opacity-60">Optimizing local-first inference for real-time reactivity.</p>
                 </div>
             </div>
         </section>
 
         <section id="connect" class="py-60 text-center reveal">
-            <h2 class="text-[12vw] font-black tracking-tighter mb-16 uppercase">INITIALIZE.</h2>
-            <a href="https://linkedin.com" class="px-24 py-12 bg-white text-black rounded-full text-3xl font-black shadow-2xl transition-transform duration-500">
+            <h2 class="text-[12vw] font-black tracking-tighter mb-16 uppercase">Initialize.</h2>
+            <a href="https://linkedin.com" class="inline-block px-24 py-12 bg-white text-black rounded-full text-3xl font-black shadow-2xl transition-all duration-500 hover:scale-110">
                 CONNECT
             </a>
         </section>
@@ -139,31 +141,35 @@
             scrollTrigger: {
                 trigger: "#viewport",
                 start: "top top",
-                end: "+=200%", 
+                end: "+=300%", 
                 scrub: true,
                 pin: true,
                 anticipatePin: 1
             }
         });
 
-        // The "Data Flight" Physics
-        tl.to("#core", { scale: 5, opacity: 0, duration: 1 }, 0);
-        tl.to("#grid", { scale: 1.8, opacity: 0, duration: 1 }, 0);
+        // 1. ORB DROPS & SCALES (The Start)
+        tl.to("#layer-orb", { scale: 5, y: 300, opacity: 0, duration: 1 }, 0);
+        
+        // 2. FUNNEL ZOOM (Flying through the first pipe)
+        tl.to("#layer-funnel", { scale: 8, opacity: 0, duration: 0.8 }, 0.2);
 
-        // FLY PAST THE NEURAL NODE
-        tl.to("#node", { 
-            scale: 25, 
+        // 3. LOGIC GATE INTERACTION (The "Tinker" moment)
+        tl.to("#layer-gate", { 
+            rotationZ: 180, 
+            scale: 12, 
             opacity: 0, 
-            rotation: 45,
-            filter: "blur(50px)", 
-            duration: 0.8 
-        }, 0);
+            filter: "blur(20px)",
+            duration: 1 
+        }, 0.5);
 
-        // FLY PAST THE CODE
-        tl.to("#code-layer", { scale: 10, y: -800, opacity: 0, duration: 0.6 }, 0);
+        // 4. THE EMITTER (The Osmo Sun Transition)
+        tl.to("#emitter", { scale: 2, opacity: 1, duration: 0.5 }, 0.8);
+        tl.to("#emitter", { opacity: 0, duration: 0.3 }, 1.3);
 
-        tl.to("#hero-tag", { y: 200, opacity: 0, duration: 0.4 }, 0);
+        tl.to("#hero-tag", { y: 200, opacity: 0, duration: 0.4 }, 0.2);
 
+        // Reveal animations for content
         document.querySelectorAll('.reveal').forEach(section => {
             gsap.from(section, {
                 scrollTrigger: { trigger: section, start: "top 85%" },
