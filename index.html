@@ -60,38 +60,37 @@
             transition: all 0.5s cubic-bezier(0.2, 1, 0.3, 1);
         }
         .circle-logo img { width: 24px; height: 24px; opacity: 0.4; transition: all 0.5s; }
+        .circle-logo span { font-family: 'Geist Mono', monospace; opacity: 0.4; transition: all 0.5s; }
         
-        /* Interactive Hover: The Cobalt Signal */
-        .glass-card:hover {
+        /* Interactive Hover: The Cobalt Signal (Journey Cards) */
+        #journey .glass-card:hover {
             background: rgba(59, 130, 246, 0.03);
             border-color: rgba(59, 130, 246, 0.4);
             box-shadow: 0 0 50px rgba(59, 130, 246, 0.1);
         }
-        .group:hover .circle-logo { 
+        #journey .group:hover .circle-logo { 
             background: var(--accent); 
             border-color: var(--accent); 
             transform: scale(1.1) rotate(5deg);
         }
-        .group:hover .circle-logo img { opacity: 1; filter: brightness(2); }
+        #journey .group:hover .circle-logo img, 
+        #journey .group:hover .circle-logo span { opacity: 1; filter: brightness(2); color: #fff; }
 
-        /* --- New Tool Hover Logic --- */
-        /* Target default state within #tools section */
+        /* --- Tool Hover Logic (Color Reveal) --- */
         #tools .group .circle-logo img {
-            filter: grayscale(1); /* Start Desaturated */
-            opacity: 0.3; /* Start Faded */
+            filter: grayscale(1);
+            opacity: 0.3;
             transition: all 0.5s ease;
         }
 
-        /* Prevent tools logo background turning blue globally on hover, to let color show */
         #tools .group:hover .circle-logo {
-            background: rgba(255,255,255,0.05); /* Don't turn blue, keep dark */
+            background: rgba(255,255,255,0.05);
             border-color: rgba(255,255,255,0.2);
         }
 
-        /* Target active state within #tools section */
         #tools .group:hover .circle-logo img {
-            filter: grayscale(0) brightness(1); /* Colored & Reset brightness filter */
-            opacity: 1; /* Bright */
+            filter: grayscale(0) brightness(1);
+            opacity: 1;
         }
         /* --------------------------- */
 
@@ -148,7 +147,7 @@
                 <div class="glass-card p-8 flex flex-col md:flex-row justify-between items-center group">
                     <div class="flex items-center gap-8">
                         <div class="circle-logo">
-                            <img src="https://cdn.simpleicons.org/stackshare/white" alt="Academic">
+                            <span class="text-xl font-black">N</span>
                         </div>
                         <div>
                             <h3 class="text-2xl font-bold uppercase tracking-tight">Masters of Computing</h3>
@@ -172,7 +171,7 @@
                 <div class="glass-card p-8 flex flex-col md:flex-row justify-between items-center group">
                     <div class="flex items-center gap-8">
                         <div class="circle-logo">
-                            <img src="https://cdn.simpleicons.org/exxonmobil/white" alt="Exxon">
+                            <span class="text-xl font-black">E</span>
                         </div>
                         <div>
                             <h3 class="text-2xl font-bold uppercase tracking-tight">Technical Engineer</h3>
@@ -195,7 +194,7 @@
                         </div>
                     </div>
                     <p class="text-slate-500 group-hover:text-slate-300 transition-colors font-light text-lg">
-                        Placeholder text for project description. Describe your technical approach and core achievements within the AI space.
+                        Project description goes here.
                     </p>
                 </a>
                 <a href="#" target="_blank" class="glass-card p-12 group block relative overflow-hidden">
@@ -206,7 +205,7 @@
                         </div>
                     </div>
                     <p class="text-slate-500 group-hover:text-slate-300 transition-colors font-light text-lg">
-                        Placeholder text for project description. Highlight model architectures, deployment strategies, or unique engineering solutions.
+                        Project description goes here.
                     </p>
                 </a>
             </div>
@@ -237,12 +236,10 @@
     </main>
 
     <script>
-        // 1. Smooth Scroll
         const lenis = new Lenis();
         function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
         requestAnimationFrame(raf);
 
-        // 2. Typewriter Effect
         const text = "HI, I'M JOSH.";
         let i = 0;
         function type() {
@@ -256,16 +253,13 @@
         }
         window.onload = type;
 
-        // 3. GSAP Logic
         gsap.registerPlugin(ScrollTrigger);
 
-        // Hero Parallax Fade
         gsap.to("#hero", {
             scrollTrigger: { trigger: "#hero", start: "top top", end: "bottom top", scrub: true },
             opacity: 0, y: -50, scale: 0.98
         });
 
-        // Entrance Reveals
         document.querySelectorAll('.reveal').forEach(section => {
             gsap.from(section, {
                 scrollTrigger: { trigger: section, start: "top 85%" },
