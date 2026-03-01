@@ -1,229 +1,150 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Josh | AI Engineer</title>
-    
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/lenis@1.0.45/dist/lenis.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@100;400;900&family=Geist+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Josh | AI Engineer</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lenis@1.0.45/dist/lenis.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@100;400;900&family=Geist+Mono:wght@400;700&display=swap" rel="stylesheet">
 
-    <style>
-        :root { --bg: #050505; --accent: #3b82f6; }
-        body { background: var(--bg); color: #fff; margin: 0; overflow-x: hidden; font-family: 'Geist', sans-serif; }
+    <style>
+        :root { --bg: #050505; --accent: #3b82f6; }
+        body { background: var(--bg); color: #fff; margin: 0; overflow-x: hidden; font-family: 'Geist', sans-serif; }
 
-        /* HERO - Absolute Centering Fix */
-        #hero { 
-            height: 100vh; width: 100%; 
-            display: flex; flex-direction: column; 
-            align-items: center; justify-content: center; 
-            text-align: center;
-        }
-        .cursor { display: inline-block; width: 2px; height: 0.9em; background: #fff; margin-left: 5px; animation: blink 1s step-end infinite; }
-        @keyframes blink { 50% { opacity: 0; } }
-        .big-name { font-size: 8vw; font-weight: 900; letter-spacing: -0.05em; line-height: 1; text-transform: uppercase; }
-        .tagline { font-size: 1.25rem; font-weight: 100; color: rgba(255,255,255,0.4); margin-top: 1.5rem; letter-spacing: 0.05em; }
+        /* HERO - Absolute Centering Fix */
+        #hero { 
+            height: 100vh; width: 100%; 
+            display: flex; flex-direction: column; 
+            align-items: center; justify-content: center; 
+            text-align: center;
+        }
+        .cursor { display: inline-block; width: 2px; height: 0.9em; background: #fff; margin-left: 5px; animation: blink 1s step-end infinite; }
+        @keyframes blink { 50% { opacity: 0; } }
+        .big-name { font-size: 8vw; font-weight: 900; letter-spacing: -0.05em; line-height: 1; text-transform: uppercase; }
+        .tagline { font-size: 1.25rem; font-weight: 100; color: rgba(255,255,255,0.4); margin-top: 1.5rem; letter-spacing: 0.05em; }
 
-        /* JOURNEY CARDS - With White Hover */
-        .journey-card { 
-            background: rgba(255, 255, 255, 0.02); 
-            backdrop-filter: blur(40px); 
-            border: 1px solid rgba(255,255,255,0.05); 
-            border-radius: 1.5rem; 
-            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .journey-card:hover { background: #fff; color: #000; border-color: #fff; }
-        .journey-card:hover .circle-logo { background: #000; border-color: #000; }
-        .journey-card:hover .circle-logo svg { fill: #fff; }
-        .journey-card:hover .text-slate-400 { color: rgba(0,0,0,0.6); }
+        /* 01. IDEAS VS REALITY */
+        .reality-pop { color: var(--accent); font-family: 'Geist Mono', monospace; font-weight: 700; text-shadow: 0 0 15px rgba(59, 130, 246, 0.3); }
 
-        /* TOOLS SECTION */
-        .tool-item { display: flex; align-items: center; gap: 1.5rem; transition: all 0.3s ease; cursor: pointer; }
-        .tool-item:hover .circle-logo { border-color: var(--accent); background: rgba(59, 130, 246, 0.1); box-shadow: 0 0 30px rgba(59, 130, 246, 0.2); }
-        .tool-item:hover span { color: var(--accent); opacity: 1; }
+        /* JOURNEY CARDS - Keep White Hover */
+        .journey-card { 
+            background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 1.5rem; 
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .journey-card:hover { background: #fff; color: #000; border-color: #fff; }
+        .journey-card:hover .circle-logo { background: #000; border-color: #000; }
+        .journey-card:hover .circle-logo svg { fill: #fff; }
 
-        /* Specific hover colors for tool icons */
-        .tool-item-pytorch:hover .circle-logo svg {
-            fill: #EE4C2C; /* Official PyTorch Red/Orange */
-        }
+        /* CIRCLE LOGO BASE */
+        .circle-logo { 
+            width: 64px; height: 64px; border-radius: 50%; 
+            background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+            display: flex; align-items: center; justify-content: center; 
+            transition: all 0.4s ease; flex-shrink: 0; overflow: hidden;
+        }
+        .circle-logo svg { width: 32px; height: 32px; fill: #fff; transition: all 0.4s ease; }
 
-        .tool-item-mysql:hover .circle-logo svg {
-            fill: #00758F; /* A strong blue from the official MySQL palette */
-        }
-
-        /* LOGO BASE */
-        .circle-logo { 
-            width: 64px; height: 64px; border-radius: 50%; 
-            background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
-            display: flex; align-items: center; justify-content: center; 
-            transition: all 0.4s ease; flex-shrink: 0;
-        }
-        .circle-logo svg { width: 32px; height: 32px; fill: #fff; transition: all 0.4s ease; }
-
-        .reality-pop { color: var(--accent); font-family: 'Geist Mono', monospace; font-weight: 700; text-shadow: 0 0 15px rgba(59, 130, 246, 0.3); }
-
-        html.lenis { height: auto; }
-    </style>
+        /* 05. TOOLS - NO WHITE BOX HOVER FIX */
+        .tool-item { display: flex; align-items: center; gap: 1.5rem; }
+        .tool-item:hover .circle-logo { border-color: var(--accent); background: rgba(59, 130, 246, 0.1); box-shadow: 0 0 20px rgba(59, 130, 246, 0.2); }
+        .tool-item:hover span { color: var(--accent); opacity: 1; }
+        
+        html.lenis { height: auto; }
+    </style>
 </head>
 <body>
 
-    <nav class="fixed top-0 w-full p-8 flex justify-between items-center z-[100] mix-blend-difference">
-        <span class="font-black text-2xl tracking-tighter uppercase">Josh.AI</span>
-        <div class="hidden md:flex space-x-8 text-[10px] font-bold tracking-[0.4em] opacity-40 uppercase">
-            <a href="#about">About</a>
-            <a href="#journey">Journey</a>
-            <a href="#lab">Lab</a>
-            <a href="#tools">Tools</a>
-        </div>
-    </nav>
+    <nav class="fixed top-0 w-full p-8 flex justify-between items-center z-[100] mix-blend-difference">
+        <span class="font-black text-2xl tracking-tighter uppercase">Josh.AI</span>
+    </nav>
 
-    <section id="hero">
-        <h1 class="big-name">
-            <span class="opacity-10 mr-4 font-light">></span><span id="typewriter"></span><span class="cursor"></span>
-        </h1>
-        <p class="tagline opacity-0" id="tagline">
-            Building with intention, learning at the speed of <span class="text-white font-normal italic">thought.</span>
-        </p>
-    </section>
+    <section id="hero">
+        <h1 class="big-name">
+            <span class="opacity-10 mr-4 font-light">></span><span id="typewriter"></span><span class="cursor"></span>
+        </h1>
+        <p class="tagline opacity-0" id="tagline">
+            Building with intention, learning at the speed of <span class="text-white font-normal italic">thought.</span>
+        </p>
+    </section>
 
-    <main class="max-w-6xl mx-auto px-8 space-y-64 pb-64 relative z-10">
-        
-        <section id="about" class="reveal pt-20">
-            <div class="grid md:grid-cols-2 gap-16 items-start">
-                <div>
-                    <h2 class="text-[10px] font-bold tracking-[0.5em] text-slate-500 mb-8 uppercase">01. Architect</h2>
-                    <p class="text-5xl md:text-7xl font-black leading-[0.9] tracking-tighter uppercase text-white">
-                        Mapping<br>The Latent<br>Space.
-                    </p>
-                </div>
-                <div class="pt-2 md:pt-20">
-                    <p class="text-2xl text-slate-400 font-light leading-relaxed">
-                        I focus on engineering AI solutions that bridge the gap between 
-                        <span class="font-extralight italic opacity-30">ideas</span> 
-                        and 
-                        <span class="reality-pop ml-1">reality</span>.
-                    </p>
-                </div>
-            </div>
-        </section>
+    <main class="max-w-6xl mx-auto px-8 space-y-64 pb-64 relative z-10">
+        
+        <section id="about" class="reveal">
+            <div class="grid md:grid-cols-2 gap-16 items-start">
+                <div>
+                    <h2 class="text-[10px] font-bold tracking-[0.5em] text-slate-500 mb-8 uppercase">01. Architect</h2>
+                    <p class="text-5xl md:text-7xl font-black leading-[0.9] tracking-tighter uppercase text-white">Mapping<br>The Latent<br>Space.</p>
+                </div>
+                <div class="pt-2 md:pt-20">
+                    <p class="text-2xl text-slate-400 font-light leading-relaxed">
+                        I focus on engineering AI solutions that bridge the gap between 
+                        <span class="font-extralight italic opacity-30">ideas</span> 
+                        and <span class="reality-pop ml-1">reality</span>.
+                    </p>
+                </div>
+            </div>
+        </section>
 
-        <section id="journey" class="reveal">
-            <h2 class="text-[10px] font-bold tracking-[0.5em] text-slate-500 mb-16 uppercase">02. Journey</h2>
-            <div class="space-y-4">
-                <div class="journey-card p-8 flex flex-col md:flex-row justify-between items-center group">
-                    <div class="flex items-center gap-8">
-                        <div class="circle-logo">
-                            <svg viewBox="0 0 24 24"><path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3zM3.89 9.5a.51.51 0 0 1 0-.1L12 5.03l8.11 4.37a.51.51 0 0 1 0 .1L12 13.97 3.89 9.5zM12 15.5l-7-3.82v2.32l7 3.82 7-3.82v-2.32l-7 3.82z"/></svg>
-                        </div>
-                        <div>
-                            <h3 class="text-2xl font-bold uppercase tracking-tight">Masters of Computing</h3>
-                            <p class="text-sm opacity-50 uppercase tracking-widest">National University of Singapore</p>
-                        </div>
-                    </div>
-                    <span class="mt-4 md:mt-0 font-mono text-sm opacity-40 italic">2025 — Present</span>
-                </div>
-                <div class="journey-card p-8 flex flex-col md:flex-row justify-between items-center group">
-                    <div class="flex items-center gap-8">
-                        <div class="circle-logo">
-                            <svg viewBox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.17-2.81-.6-4.03-1.37-.01 2.23 0 4.45-.02 6.68-.15 3.68-2.81 6.94-6.45 7.63-3.82.72-7.62-1.71-8.33-5.51-.7-3.77 1.71-7.58 5.48-8.29.33-.06.66-.1 1-.11v4.01c-.07.01-.15.01-.22.02-1.75.21-3.12 1.75-3 3.51.13 1.75 1.7 3.12 3.48 3.01 1.62-.09 2.89-1.45 2.89-3.07V.02z"/></svg>
-                        </div>
-                        <div>
-                            <h3 class="text-2xl font-bold uppercase tracking-tight">Machine Learning Specialist</h3>
-                            <p class="text-sm opacity-50 uppercase tracking-widest">TikTok / ByteDance</p>
-                        </div>
-                    </div>
-                    <span class="mt-4 md:mt-0 font-mono text-sm opacity-40 italic">2021 — 2024</span>
-                </div>
-                <div class="journey-card p-8 flex flex-col md:flex-row justify-between items-center group">
-                    <div class="flex items-center gap-8">
-                        <div class="circle-logo">
-                            <svg viewBox="0 0 24 24"><path d="M16.48 4.22h6.18L18.4 12l4.26 7.78h-6.18L12.24 12l4.24-7.78zM1.34 4.22h6.18L11.78 12l-4.26 7.78H1.34L5.6 12 1.34 4.22z"/></svg>
-                        </div>
-                        <div>
-                            <h3 class="text-2xl font-bold uppercase tracking-tight">Technical Engineer</h3>
-                            <p class="text-sm opacity-50 uppercase tracking-widest">ExxonMobil</p>
-                        </div>
-                    </div>
-                    <span class="mt-4 md:mt-0 font-mono text-sm opacity-40 italic">2018 — 2020</span>
-                </div>
-            </div>
-        </section>
+        <section id="tools" class="reveal">
+            <h2 class="text-[10px] font-bold tracking-[0.5em] text-slate-500 mb-12 uppercase">05. Tools</h2>
+            <div class="flex flex-row items-center gap-16">
+                
+                <div class="tool-item">
+                    <div class="circle-logo w-20 h-20">
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 24C5.373 24 0 18.627 0 12S5.373 0 12 0s12 5.373 12 12-5.373 12-12 12zm0-22.316c-5.7 0-10.316 4.616-10.316 10.316S6.3 22.316 12 22.316s10.316-4.616 10.316-10.316S17.7 1.684 12 1.684zm0 16.516c-3.441 0-6.232-2.791-6.232-6.232 0-3.441 2.791-6.232 6.232-6.232 3.441 0 6.232 2.791 6.232 6.232 0 3.441-2.791 6.232-6.232 6.232zm.032-9.711c-.563 0-1.019.456-1.019 1.019s.456 1.019 1.019 1.019c.563 0 1.019-.456 1.019-1.019s-.456-1.019-1.019-1.019zm-.032 7.194c.328 0 .594-.266.594-.594V10.8c0-.328-.266-.594-.594-.594-.328 0-.594.266-.594.594v4.287c0 .328.266.594.594.594z"/>
+                        </svg>
+                    </div>
+                    <span class="text-xs font-bold tracking-[0.3em] opacity-20 uppercase">PyTorch</span>
+                </div>
 
-        <section id="lab" class="reveal">
-            <h2 class="text-[10px] font-bold tracking-[0.5em] text-slate-500 mb-16 uppercase">04. Laboratory</h2>
-            <div class="grid md:grid-cols-2 gap-8">
-                <a href="#" target="_blank" class="journey-card p-12 block group">
-                    <h3 class="text-5xl font-black uppercase tracking-tighter italic mb-12">Aether</h3>
-                    <p class="opacity-50 font-light text-lg">Project description goes here.</p>
-                </a>
-                <a href="#" target="_blank" class="journey-card p-12 block group">
-                    <h3 class="text-5xl font-black uppercase tracking-tighter italic mb-12">Mercury</h3>
-                    <p class="opacity-50 font-light text-lg">Project description goes here.</p>
-                </a>
-            </div>
-        </section>
+                <div class="tool-item">
+                    <div class="circle-logo w-20 h-20">
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M22.017 11.396a.44.44 0 0 0-.44-.44h-5.228l-2.028-4.908a.44.44 0 0 0-.814 0l-2.028 4.908H6.248a.44.44 0 0 0-.44.44c0 .243.197.44.44.44h4.862l-3.328 8.05a.44.44 0 1 0 .814 0l3.328-8.05 3.328 8.05a.44.44 0 1 0 .814 0l3.328-8.05h4.633a.44.44 0 0 0 .44-.44zm-9.577 3.491l-1.928-4.664h3.856l-1.928 4.664z"/>
+                        </svg>
+                    </div>
+                    <span class="text-xs font-bold tracking-[0.3em] opacity-20 uppercase">MySQL</span>
+                </div>
+            </div>
+        </section>
 
-        <section id="tools" class="reveal">
-            <h2 class="text-[10px] font-bold tracking-[0.5em] text-slate-500 mb-12 uppercase">05. Tools</h2>
-            <div class="flex flex-row items-center gap-16">
-                                <div class="tool-item tool-item-pytorch">
-                    <div class="circle-logo w-20 h-20">
-                                                <svg viewBox="0 0 24 24">
-                            <path d="M11.996 0c-6.627 0-12 5.373-12 12s5.373 12 12 12c6.623 0 12-5.373 12-12s-5.377-12-12-12zm.012 21.9c-5.462 0-9.9-4.432-9.9-9.894s4.428-9.9 9.9-9.9c5.466 0 9.894 4.438 9.894 9.9 0 5.462-4.428 9.894-9.894 9.894zm-.502-14.392c.517.004.994.463 1.002.996.004.53-.42.983-.951.999a.996.996 0 0 1-.996-1.003c0-.525.432-.98 1.006-.992h-.061zm.502 3.492c.276 0 .5.22.5.5v5c0 .28-.224.5-.5.5s-.5-.22-.5-.5v-5c0-.28.224-.5.5-.5z"/>
-                        </svg>
-                    </div>
-                    <span class="text-xs font-bold tracking-[0.3em] opacity-20 uppercase">PyTorch</span>
-                </div>
-                                <div class="tool-item tool-item-mysql">
-                    <div class="circle-logo w-20 h-20">
-                                                <svg viewBox="0 0 24 24">
-                            <path d="M22.017 11.396a.44.44 0 0 0-.44-.44h-5.228l-2.028-4.908a.44.44 0 0 0-.814 0l-2.028 4.908H6.248a.44.44 0 0 0-.44.44c0 .243.197.44.44.44h4.862l-3.328 8.05a.44.44 0 1 0 .814 0l3.328-8.05 3.328 8.05a.44.44 0 1 0 .814 0l3.328-8.05h4.633a.44.44 0 0 0 .44-.44zM12.44 14.887l-1.928-4.664h3.856l-1.928 4.664z"/>
-                        </svg>
-                    </div>
-                    <span class="text-xs font-bold tracking-[0.3em] opacity-20 uppercase">MySQL</span>
-                </div>
-            </div>
-        </section>
+    </main>
 
-        <section class="py-40 text-center reveal border-t border-white/5">
-            <a href="https://linkedin.com" class="text-5xl md:text-8xl font-black hover:text-blue-500 transition-all uppercase tracking-tighter">Initialize.</a>
-        </section>
+    <script>
+        const lenis = new Lenis();
+        function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+        requestAnimationFrame(raf);
 
-    </main>
+        const text = "HI, I'M JOSH.";
+        let i = 0;
+        function type() {
+            if (i < text.length) {
+                document.getElementById("typewriter").innerHTML += text.charAt(i);
+                i++;
+                setTimeout(type, 100);
+            } else {
+                gsap.to("#tagline", { opacity: 1, y: -20, duration: 1, ease: "power2.out" });
+            }
+        }
+        window.onload = type;
 
-    <script>
-        const lenis = new Lenis();
-        function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
-        requestAnimationFrame(raf);
+        gsap.registerPlugin(ScrollTrigger);
+        gsap.to("#hero", {
+            scrollTrigger: { trigger: "#hero", start: "top top", end: "bottom top", scrub: true },
+            opacity: 0, y: -50, scale: 0.98
+        });
 
-        const text = "HI, I'M JOSH.";
-        let i = 0;
-        function type() {
-            if (i < text.length) {
-                document.getElementById("typewriter").innerHTML += text.charAt(i);
-                i++;
-                setTimeout(type, 100);
-            } else {
-                gsap.to("#tagline", { opacity: 1, y: -20, duration: 1, ease: "power2.out" });
-            }
-        }
-        window.onload = type;
-
-        gsap.registerPlugin(ScrollTrigger);
-        gsap.to("#hero", {
-            scrollTrigger: { trigger: "#hero", start: "top top", end: "bottom top", scrub: true },
-            opacity: 0, y: -50, scale: 0.98
-        });
-
-        document.querySelectorAll('.reveal').forEach(section => {
-            gsap.from(section, {
-                scrollTrigger: { trigger: section, start: "top 85%" },
-                y: 40, opacity: 0, duration: 1.2, ease: "power4.out"
-            });
-        });
-    </script>
+        document.querySelectorAll('.reveal').forEach(section => {
+            gsap.from(section, {
+                scrollTrigger: { trigger: section, start: "top 85%" },
+                y: 40, opacity: 0, duration: 1.2, ease: "power4.out"
+            });
+        });
+    </script>
 </body>
 </html>
