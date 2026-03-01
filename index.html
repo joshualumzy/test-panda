@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Josh | AI Engineer</title>
+    <title>Josh | AI Architect</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lenis@1.0.45/dist/lenis.min.js"></script>
@@ -74,6 +74,27 @@
         }
         .group:hover .circle-logo img { opacity: 1; filter: brightness(2); }
 
+        /* --- New Tool Hover Logic --- */
+        /* Target default state within #tools section */
+        #tools .group .circle-logo img {
+            filter: grayscale(1); /* Start Desaturated */
+            opacity: 0.3; /* Start Faded */
+            transition: all 0.5s ease;
+        }
+
+        /* Prevent tools logo background turning blue globally on hover, to let color show */
+        #tools .group:hover .circle-logo {
+            background: rgba(255,255,255,0.05); /* Don't turn blue, keep dark */
+            border-color: rgba(255,255,255,0.2);
+        }
+
+        /* Target active state within #tools section */
+        #tools .group:hover .circle-logo img {
+            filter: grayscale(0) brightness(1); /* Colored & Reset brightness filter */
+            opacity: 1; /* Bright */
+        }
+        /* --------------------------- */
+
         html.lenis { height: auto; }
     </style>
 </head>
@@ -112,9 +133,9 @@
                 </div>
                 <div class="pt-2 md:pt-20">
                     <p class="text-2xl text-slate-400 font-light leading-relaxed">
-                        I focus on engineering AI solutions that bridge the gap between 
-                        <span class="font-extralight italic opacity-40">ideas</span> 
-                        and 
+                        I focus on engineering AI solutions that bridge the gap between 
+                        <span class="font-extralight italic opacity-40">ideas</span> 
+                        and 
                         <span class="reality-pop ml-1">reality</span>.
                     </p>
                 </div>
@@ -196,13 +217,13 @@
             <div class="flex flex-wrap items-center gap-12">
                 <div class="group flex items-center gap-4">
                     <div class="circle-logo w-20 h-20">
-                        <img src="https://cdn.simpleicons.org/pytorch/white" alt="PyTorch" class="!w-10 !h-10">
+                        <img src="https://cdn.simpleicons.org/pytorch/EE4C2C" alt="PyTorch" class="!w-10 !h-10">
                     </div>
                     <span class="text-xs font-bold tracking-[0.3em] opacity-20 group-hover:opacity-100 group-hover:text-blue-400 transition-all uppercase">PyTorch</span>
                 </div>
                 <div class="group flex items-center gap-4">
                     <div class="circle-logo w-20 h-20">
-                        <img src="https://cdn.simpleicons.org/mysql/white" alt="MySQL" class="!w-10 !h-10">
+                        <img src="https://cdn.simpleicons.org/mysql/4479A1" alt="MySQL" class="!w-10 !h-10">
                     </div>
                     <span class="text-xs font-bold tracking-[0.3em] opacity-20 group-hover:opacity-100 group-hover:text-blue-400 transition-all uppercase">MySQL</span>
                 </div>
