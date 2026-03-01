@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Josh | Fluid Portfolio</title>
+    <title>Josh | The Full Experience</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Geist:wght@100;400;900&display=swap" rel="stylesheet">
     <style>
@@ -13,76 +13,80 @@
             background-color: #ffffff;
             color: #0f172a;
             overflow-x: hidden;
-            margin: 0;
         }
 
-        /* 1. THE FLUID ENGINE (Background) */
-        #canvas-container {
+        /* 1. LIQUID PROGRESS BAR */
+        #progress-container {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            z-index: -1;
-            filter: blur(100px);
-            opacity: 0.7;
+            top: 0; left: 0; width: 100%; height: 6px;
+            z-index: 100; background: rgba(255,255,255,0.1);
+        }
+        #progress-bar {
+            height: 100%; width: 0%;
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+            transition: width 0.1s ease-out;
         }
 
-        /* 2. TYPING CURSOR */
+        /* 2. THE FLUID ENGINE */
+        #canvas-container {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            z-index: -1; filter: blur(100px); opacity: 0.7;
+        }
+
+        /* 3. TYPING CURSOR */
         #typing-text::after {
-            content: "|";
-            animation: blink 0.8s infinite;
-            margin-left: 5px;
-            color: var(--accent);
+            content: "|"; animation: blink 0.8s infinite;
+            margin-left: 5px; color: var(--accent);
         }
         @keyframes blink { 50% { opacity: 0; } }
 
-        /* 3. ANTIGRAVITY CARDS */
+        /* 4. ANTIGRAVITY CARDS */
         .glass-card {
             background: rgba(255, 255, 255, 0.4);
             backdrop-filter: blur(30px) saturate(150%);
             border: 1px solid rgba(255, 255, 255, 0.6);
-            border-radius: 3rem;
+            border-radius: 2.5rem;
             transition: transform 0.2s ease-out, box-shadow 0.5s ease;
             transform-style: preserve-3d;
         }
-        .glass-card:hover {
-            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.05);
-        }
 
-        /* 4. LIQUID BUTTON */
-        .liquid-btn {
+        /* 5. RESTORED TIMELINE STYLING */
+        .timeline-item {
             position: relative;
-            overflow: hidden;
-            transition: all 0.5s cubic-bezier(0.2, 1, 0.3, 1);
+            padding-left: 3rem;
+            border-left: 2px solid rgba(15, 23, 42, 0.05);
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
         }
-        .liquid-btn .glow {
-            position: absolute;
-            width: 150px;
-            height: 150px;
-            background: radial-gradient(circle, rgba(255,255,255,0.4) 0%, transparent 70%);
-            pointer-events: none;
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-            opacity: 0;
-            transition: opacity 0.3s;
+        .timeline-item::before {
+            content: ''; position: absolute; left: -7px; top: 0;
+            width: 12px; height: 12px; border-radius: 50%;
+            background: #cbd5e1; transition: all 0.3s ease;
         }
-        .liquid-btn:hover .glow { opacity: 1; }
-
+        .timeline-item:hover::before {
+            background: var(--accent); transform: scale(1.5);
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+        }
+        .timeline-details {
+            max-height: 0; overflow: hidden; opacity: 0;
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .timeline-item:hover .timeline-details {
+            max-height: 200px; opacity: 1; margin-top: 1rem;
+        }
     </style>
 </head>
 <body>
 
-    <div id="canvas-container">
-        <canvas id="fluid-canvas"></canvas>
-    </div>
+    <div id="progress-container"><div id="progress-bar"></div></div>
+
+    <div id="canvas-container"><canvas id="fluid-canvas"></canvas></div>
 
     <section class="min-h-screen flex flex-col justify-center px-8 md:px-24">
         <h1 class="text-7xl md:text-[11rem] font-black tracking-tighter leading-[0.8] mb-10">
             <span id="typing-text"></span>
         </h1>
         <p class="text-2xl md:text-4xl font-light text-slate-500 max-w-2xl">
-            I build <span class="text-slate-900">kinetic interfaces</span> that bridge the gap between human thought and digital motion.
+            Restoring the <span class="text-slate-900">flow</span>. Building experiences that feel weightless.
         </p>
     </section>
 
@@ -90,140 +94,122 @@
         
         <section class="grid md:grid-cols-2 gap-20 items-center">
             <div class="glass-card p-2 aspect-square max-w-md mx-auto overflow-hidden">
-                <img src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&q=80&w=800" class="w-full h-full object-cover rounded-[2.8rem] grayscale hover:grayscale-0 transition-all duration-1000">
+                <img src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&q=80&w=800" class="w-full h-full object-cover rounded-[2.3rem] grayscale hover:grayscale-0 transition-all duration-700">
             </div>
             <div>
-                <h3 class="text-xs font-black uppercase tracking-[0.4em] text-blue-500 mb-6">Philosophy</h3>
+                <h3 class="text-xs font-black uppercase tracking-[0.4em] text-blue-500 mb-6">About</h3>
                 <p class="text-4xl font-light leading-tight">
-                    Code shouldn't be rigid. It should <span class="italic font-normal">flow</span>. My work focuses on organic transitions and physics-aware layouts.
+                    I specialize in <span class="italic">dynamic state</span> management and high-fidelity motion.
                 </p>
             </div>
         </section>
 
         <section>
-            <h3 class="text-xs font-black uppercase tracking-[0.4em] text-slate-400 mb-12">Notable Work</h3>
+            <h3 class="text-xs font-black uppercase tracking-[0.4em] text-slate-400 mb-16">The Journey</h3>
+            <div class="max-w-3xl space-y-12">
+                <div class="timeline-item">
+                    <span class="text-sm font-bold text-blue-500 uppercase tracking-widest">2024 — Now</span>
+                    <h4 class="text-3xl font-black mt-2">Senior Experience Engineer</h4>
+                    <div class="timeline-details">
+                        <p class="text-xl text-slate-500">Leading the development of agent-first interfaces and physics-based design systems for web-scale platforms.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <span class="text-sm font-bold text-slate-400 uppercase tracking-widest">2021 — 2023</span>
+                    <h4 class="text-3xl font-black mt-2">Interaction Designer</h4>
+                    <div class="timeline-details">
+                        <p class="text-xl text-slate-500">Bridging the gap between static Figma layouts and high-performance React applications.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h3 class="text-xs font-black uppercase tracking-[0.4em] text-slate-400 mb-16">Notable Work</h3>
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
-                
-                <div class="glass-card p-10 flex flex-col h-full hover:scale-105 transition-all">
-                    <div class="w-14 h-14 bg-blue-600 rounded-2xl mb-8 flex items-center justify-center text-white font-bold text-2xl">A</div>
+                <div class="glass-card p-10 flex flex-col h-full">
+                    <div class="w-14 h-14 bg-blue-600 rounded-2xl mb-8 flex items-center justify-center text-white font-bold text-2xl shadow-lg shadow-blue-200">A</div>
                     <h4 class="text-3xl font-bold mb-4">Project Aether</h4>
-                    <p class="text-slate-500 flex-grow text-lg">A library for physics-based UI components that react to gravity and scroll velocity.</p>
-                    <a href="#" class="mt-10 font-bold flex items-center gap-2 group">View Repository <span class="group-hover:translate-x-2 transition-transform">→</span></a>
+                    <p class="text-slate-500 flex-grow text-lg">Physics-based UI components that react to scroll velocity.</p>
+                    <a href="#" class="mt-10 font-bold group">View Repo <span class="inline-block group-hover:translate-x-2 transition-transform">→</span></a>
                 </div>
-
-                <div class="glass-card p-10 flex flex-col h-full hover:scale-105 transition-all">
-                    <div class="w-14 h-14 bg-rose-500 rounded-2xl mb-8 flex items-center justify-center text-white font-bold text-2xl">S</div>
+                <div class="glass-card p-10 flex flex-col h-full">
+                    <div class="w-14 h-14 bg-rose-500 rounded-2xl mb-8 flex items-center justify-center text-white font-bold text-2xl shadow-lg shadow-rose-200">S</div>
                     <h4 class="text-3xl font-bold mb-4">Fluid Shell</h4>
-                    <p class="text-slate-500 flex-grow text-lg">An experimental IDE skin designed for agentic coding workflows and deep focus.</p>
-                    <a href="#" class="mt-10 font-bold flex items-center gap-2 group">View Repository <span class="group-hover:translate-x-2 transition-transform">→</span></a>
+                    <p class="text-slate-500 flex-grow text-lg">Experimental IDE for agentic coding workflows.</p>
+                    <a href="#" class="mt-10 font-bold group">View Repo <span class="inline-block group-hover:translate-x-2 transition-transform">→</span></a>
                 </div>
-
-                <div class="glass-card p-10 flex flex-col h-full hover:scale-105 transition-all">
-                    <div class="w-14 h-14 bg-emerald-500 rounded-2xl mb-8 flex items-center justify-center text-white font-bold text-2xl">M</div>
-                    <h4 class="text-3xl font-bold mb-4">Mercury OS</h4>
-                    <p class="text-slate-500 flex-grow text-lg">A conceptual operating system interface built entirely on fluid mesh design principles.</p>
-                    <a href="#" class="mt-10 font-bold flex items-center gap-2 group">View Repository <span class="group-hover:translate-x-2 transition-transform">→</span></a>
-                </div>
-
             </div>
         </section>
 
         <section class="text-center">
-            <a href="https://linkedin.com" class="liquid-btn inline-block px-20 py-10 bg-slate-900 text-white rounded-full text-4xl font-black shadow-2xl">
-                <div class="glow" id="btn-glow"></div>
+            <a href="https://linkedin.com" class="inline-block px-20 py-10 bg-slate-900 text-white rounded-full text-4xl font-black shadow-2xl hover:scale-105 transition-transform duration-500">
                 CONNECT
             </a>
         </section>
-
     </main>
 
     <script>
-        // --- 1. TYPEWRITER EFFECT ---
+        // TYPEWRITER
         const textElement = document.getElementById('typing-text');
         const phrase = "Hi! I'm Josh.";
         let i = 0;
-
         function typeWriter() {
             if (i < phrase.length) {
-                textElement.innerHTML += phrase.charAt(i);
-                i++;
+                textElement.innerHTML += phrase.charAt(i); i++;
                 setTimeout(typeWriter, 120);
             }
         }
         window.onload = typeWriter;
 
-        // --- 2. DYNAMIC FLUID BACKGROUND ENGINE ---
+        // PROGRESS BAR
+        window.onscroll = function() {
+            let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            let scrolled = (winScroll / height) * 100;
+            document.getElementById("progress-bar").style.width = scrolled + "%";
+        };
+
+        // BACKGROUND ENGINE
         const canvas = document.getElementById('fluid-canvas');
         const ctx = canvas.getContext('2d');
         let width, height, time = 0;
-
-        function resize() {
-            width = canvas.width = window.innerWidth;
-            height = canvas.height = window.innerHeight;
-        }
-
+        function resize() { width = canvas.width = window.innerWidth; height = canvas.height = window.innerHeight; }
         window.addEventListener('resize', resize);
         resize();
 
         function animate() {
-            ctx.clearRect(0, 0, width, height);
-            time += 0.005;
-
+            ctx.clearRect(0, 0, width, height); time += 0.003;
             const colors = [
-                { x: 0.2, y: 0.3, r: 0.6, c: '#dbeafe' }, // Blue
-                { x: 0.8, y: 0.2, r: 0.7, c: '#fee2e2' }, // Rose
-                { x: 0.5, y: 0.8, r: 0.8, c: '#f0fdf4' }, // Emerald
-                { x: 0.1, y: 0.9, r: 0.5, c: '#faf5ff' }  // Purple
+                { x: 0.2, y: 0.3, r: 0.6, c: '#dbeafe' },
+                { x: 0.8, y: 0.2, r: 0.7, c: '#fee2e2' },
+                { x: 0.5, y: 0.8, r: 0.8, c: '#f0fdf4' }
             ];
-
             colors.forEach((color, i) => {
-                // Organic orbiting motion
-                const x = (color.x + Math.sin(time + i) * 0.2) * width;
-                const y = (color.y + Math.cos(time * 0.8 + i) * 0.2) * height;
+                const x = (color.x + Math.sin(time + i) * 0.15) * width;
+                const y = (color.y + Math.cos(time * 0.7 + i) * 0.15) * height;
                 const radius = color.r * Math.max(width, height);
-
                 const grad = ctx.createRadialGradient(x, y, 0, x, y, radius);
-                grad.addColorStop(0, color.c);
-                grad.addColorStop(1, 'transparent');
-
-                ctx.fillStyle = grad;
-                ctx.fillRect(0, 0, width, height);
+                grad.addColorStop(0, color.c); grad.addColorStop(1, 'transparent');
+                ctx.fillStyle = grad; ctx.fillRect(0, 0, width, height);
             });
-
             requestAnimationFrame(animate);
         }
         animate();
 
-        // --- 3. 3D TILT EFFECT FOR PROJECTS ---
+        // TILT EFFECT
         document.querySelectorAll('.glass-card').forEach(card => {
             card.addEventListener('mousemove', (e) => {
                 const rect = card.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                
-                const centerX = rect.width / 2;
-                const centerY = rect.height / 2;
-                
-                const rotateX = (y - centerY) / 10;
-                const rotateY = (centerX - x) / 10;
-                
+                const x = e.clientX - rect.left; const y = e.clientY - rect.top;
+                const rotateX = (y - rect.height / 2) / 10;
+                const rotateY = (rect.width / 2 - x) / 10;
                 card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
             });
-
             card.addEventListener('mouseleave', () => {
                 card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
             });
         });
-
-        // --- 4. BUTTON GLOW TRACKER ---
-        const btn = document.querySelector('.liquid-btn');
-        const glow = document.getElementById('btn-glow');
-        btn.addEventListener('mousemove', (e) => {
-            const rect = btn.getBoundingClientRect();
-            glow.style.left = `${e.clientX - rect.left}px`;
-            glow.style.top = `${e.clientY - rect.top}px`;
-        });
-
     </script>
 </body>
 </html>
