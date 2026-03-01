@@ -12,43 +12,38 @@
     <link href="https://fonts.googleapis.com/css2?family=Geist:wght@100;400;900&display=swap" rel="stylesheet">
 
     <style>
-        :root { --accent: #fff; --bg: #000; }
+        :root { --bg: #050505; }
         body { background: var(--bg); color: #fff; margin: 0; overflow-x: hidden; font-family: 'Geist', sans-serif; }
 
-        /* 1. THE STAGE */
-        #stage {
-            position: relative; height: 100vh; width: 100%;
-            display: flex; align-items: center; justify-content: center;
-            overflow: hidden;
-        }
-
-        /* 2. THE FLOATING OBJECT (The "Seed") */
-        .the-seed {
-            width: 300px; height: 300px;
-            background: linear-gradient(135deg, #1a1a1a 0%, #000 100%);
-            border: 1px solid rgba(255,255,255,0.1);
+        #hero {
+            height: 100vh; width: 100%;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
             position: relative;
-            transform-style: preserve-3d;
-            box-shadow: 0 0 100px rgba(255,255,255,0.05);
         }
 
-        /* 3. LIGHTING (The Lens Flare) */
-        .flare {
-            position: absolute; width: 1px; height: 30vh;
-            background: linear-gradient(to bottom, transparent, #fff, transparent);
-            opacity: 0.2;
+        .cursor {
+            display: inline-block; width: 2px; height: 0.9em;
+            background: #fff; margin-left: 5px;
+            animation: blink 1s step-end infinite;
         }
 
-        /* Typography */
-        .big-text {
-            font-size: 15vw; font-weight: 900; letter-spacing: -0.05em;
-            line-height: 0.8; text-transform: uppercase;
+        @keyframes blink { 50% { opacity: 0; } }
+
+        .big-name {
+            font-size: 10vw; font-weight: 900; letter-spacing: -0.06em;
+            line-height: 1; text-transform: uppercase;
         }
 
-        .glass-panel {
+        .tagline {
+            font-size: 1.5rem; font-weight: 100; color: rgba(255,255,255,0.4);
+            margin-top: 2rem; letter-spacing: 0.1em;
+        }
+
+        .glass-card {
             background: rgba(255, 255, 255, 0.02);
-            backdrop-filter: blur(50px);
+            backdrop-filter: blur(40px);
             border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 2rem;
         }
 
         html.lenis { height: auto; }
@@ -57,106 +52,108 @@
 <body>
 
     <nav class="fixed top-0 w-full p-10 flex justify-between items-center z-[100] mix-blend-difference">
-        <span class="font-black text-2xl tracking-tighter">JOSH.AI</span>
+        <span class="font-black text-2xl tracking-tighter uppercase">Josh.AI</span>
         <div class="space-x-12 text-xs font-bold tracking-[0.4em] opacity-40 uppercase">
             <a href="#about" class="hover:opacity-100 transition">Systems</a>
             <a href="#lab" class="hover:opacity-100 transition">Laboratory</a>
         </div>
     </nav>
 
-    <section id="stage">
-        <div class="flare left-[20%] top-0"></div>
-        <div class="flare right-[20%] bottom-0"></div>
-
-        <div class="the-seed" id="seed">
-            <div class="absolute inset-0 flex items-center justify-center">
-                <span class="text-[8px] tracking-[1em] uppercase opacity-20 rotate-90">Initializing Architecture</span>
-            </div>
-        </div>
-
-        <div class="absolute inset-0 flex items-center justify-center opacity-0 pointer-events-none" id="reveal-text">
-            <h1 class="big-text text-center">BUILDER<br><span class="opacity-10">OF THE</span><br>FUTURE</h1>
-        </div>
-
-        <div class="absolute bottom-10 w-full text-center opacity-40" id="scroll-hint">
-            <span class="text-[10px] uppercase tracking-[0.5em]">Scroll to Expand</span>
+    <section id="hero">
+        <div class="text-center">
+            <h1 class="big-name"><span id="typewriter"></span><span class="cursor"></span></h1>
+            <p class="tagline opacity-0" id="tagline">
+                Engineering through exploration, learning at the speed of <span class="text-white font-normal italic">thought.</span>
+            </p>
         </div>
     </section>
 
-    <main class="max-w-7xl mx-auto px-10 space-y-96 pb-96 relative z-10">
+    <main class="max-w-7xl mx-auto px-10 space-y-64 pb-64 relative z-10">
         
         <section id="about" class="reveal">
-            <div class="grid md:grid-cols-2 gap-20">
-                <h2 class="text-xs font-bold tracking-[0.5em] text-slate-500 uppercase">01. The Architect</h2>
-                <p class="text-4xl font-light leading-tight text-slate-300">
-                    I treat AI as a <span class="text-white font-medium">malleable material</span>. My work is focused on the suspension of complexity—creating systems that feel weightless despite their scale.
-                </p>
+            <div class="grid md:grid-cols-2 gap-24 items-start">
+                <div>
+                    <h2 class="text-xs font-bold tracking-[0.5em] text-slate-500 mb-10 uppercase">01. The Architect</h2>
+                    <p class="text-5xl md:text-7xl font-black leading-[0.9] tracking-tighter uppercase">
+                        Mapping<br>The Latent<br>Space.
+                    </p>
+                </div>
+                <div class="pt-4 md:pt-20">
+                    <p class="text-2xl text-slate-400 font-light leading-relaxed">
+                        I build high-velocity AI systems that bridge the gap between <span class="text-white">unstructured intelligence</span> and production-grade architectures. 
+                    </p>
+                    <div class="mt-12 flex gap-4 flex-wrap">
+                        <span class="px-6 py-2 border border-white/10 rounded-full text-xs font-bold uppercase tracking-widest text-white/40">LLM Orchestration</span>
+                        <span class="px-6 py-2 border border-white/10 rounded-full text-xs font-bold uppercase tracking-widest text-white/40">Vector Ops</span>
+                    </div>
+                </div>
             </div>
         </section>
 
         <section id="lab" class="reveal">
-            <h2 class="text-xs font-bold tracking-[0.5em] text-slate-500 mb-20 uppercase">02. Laboratory</h2>
-            <div class="grid md:grid-cols-3 gap-1">
-                <div class="glass-panel p-16 aspect-square flex flex-col justify-between group hover:bg-white hover:text-black transition-all duration-700">
-                    <span class="text-xs opacity-40">0x01</span>
-                    <h3 class="text-4xl font-black">AETHER</h3>
+            <h2 class="text-xs font-bold tracking-[0.5em] text-slate-500 mb-16 uppercase">02. Laboratory</h2>
+            <div class="grid md:grid-cols-2 gap-10">
+                <div class="glass-card p-16 hover:bg-white hover:text-black transition-all duration-700 group">
+                    <h3 class="text-6xl font-black mb-8 tracking-tighter uppercase italic">Aether</h3>
+                    <p class="text-xl opacity-60 font-light">Custom inference wrapper for physics-based web interactions.</p>
                 </div>
-                <div class="glass-panel p-16 aspect-square flex flex-col justify-between group hover:bg-white hover:text-black transition-all duration-700">
-                    <span class="text-xs opacity-40">0x02</span>
-                    <h3 class="text-4xl font-black">MERCURY</h3>
-                </div>
-                <div class="glass-panel p-16 aspect-square flex flex-col justify-between group hover:bg-white hover:text-black transition-all duration-700">
-                    <span class="text-xs opacity-40">0x03</span>
-                    <h3 class="text-4xl font-black">ORBIT</h3>
+                <div class="glass-card p-16 hover:bg-white hover:text-black transition-all duration-700 group">
+                    <h3 class="text-6xl font-black mb-8 tracking-tighter uppercase italic">Mercury</h3>
+                    <p class="text-xl opacity-60 font-light">Edge-quantized model serving for local-first intelligence.</p>
                 </div>
             </div>
+        </section>
+
+        <section id="connect" class="py-60 text-center reveal">
+            <h2 class="text-[12vw] font-black tracking-tighter mb-16 uppercase leading-none">INITIALIZE.</h2>
+            <a href="https://linkedin.com" class="inline-block px-24 py-12 bg-white text-black rounded-full text-3xl font-black transition-transform duration-500 hover:scale-110 shadow-2xl">
+                CONNECT
+            </a>
         </section>
 
     </main>
 
     <script>
+        // 1. Smooth Scroll
         const lenis = new Lenis();
         function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
         requestAnimationFrame(raf);
 
+        // 2. Typewriter Logic
+        const text = "HI, I'M JOSH.";
+        let i = 0;
+        function type() {
+            if (i < text.length) {
+                document.getElementById("typewriter").innerHTML += text.charAt(i);
+                i++;
+                setTimeout(type, 100);
+            } else {
+                gsap.to("#tagline", { opacity: 1, y: -20, duration: 1, ease: "power2.out" });
+            }
+        }
+        window.onload = type;
+
+        // 3. GSAP Parallax & Reveals
         gsap.registerPlugin(ScrollTrigger);
 
-        // THE ANTIGRAVITY TIMELINE
-        const tl = gsap.timeline({
+        // Hero Fade-out on scroll
+        gsap.to("#hero", {
             scrollTrigger: {
-                trigger: "#stage",
+                trigger: "#hero",
                 start: "top top",
-                end: "+=150%",
-                scrub: true,
-                pin: true
-            }
+                end: "bottom top",
+                scrub: true
+            },
+            opacity: 0,
+            y: -100,
+            scale: 0.95
         });
 
-        // 1. Rotate the seed slowly
-        gsap.to("#seed", { rotationY: 360, duration: 20, repeat: -1, ease: "none" });
-
-        // 2. The Scroll Effect: Shatter/Expand
-        tl.to("#seed", { 
-            scale: 0.5, 
-            opacity: 0, 
-            borderRadius: "50%",
-            filter: "blur(20px)",
-            duration: 1 
-        }, 0);
-
-        tl.to("#reveal-text", { 
-            opacity: 1, 
-            scale: 1.1, 
-            duration: 1 
-        }, 0.5);
-
-        tl.to("#scroll-hint", { opacity: 0, duration: 0.2 }, 0);
-
-        // 3. Section Reveal
+        // Content Reveal Animations
         document.querySelectorAll('.reveal').forEach(section => {
             gsap.from(section, {
-                scrollTrigger: { trigger: section, start: "top 80%" },
-                y: 50, opacity: 0, duration: 1.5, ease: "expo.out"
+                scrollTrigger: { trigger: section, start: "top 85%" },
+                y: 50, opacity: 0, duration: 1.5, ease: "power4.out"
             });
         });
     </script>
