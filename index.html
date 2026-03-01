@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Josh | AI Engineering Frontier</title>
+    <title>Josh | AI Exploration</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lenis@1.0.45/dist/lenis.min.js"></script>
@@ -12,110 +12,75 @@
     <link href="https://fonts.googleapis.com/css2?family=Geist:wght@100;400;900&display=swap" rel="stylesheet">
 
     <style>
-        body {
-            background-color: #000;
-            color: #fff;
-            margin: 0;
-            font-family: 'Geist', sans-serif;
-            overflow-x: hidden;
-        }
-
-        /* 1. THE 3D VIEWPORT */
+        body { background: #000; color: #fff; margin: 0; overflow-x: hidden; font-family: 'Geist', sans-serif; }
+        
         #viewport {
-            position: relative;
-            height: 100vh;
-            width: 100%;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            position: relative; height: 100vh; width: 100%;
+            overflow: hidden; display: flex; align-items: center; justify-content: center;
         }
 
         .layer {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            position: absolute; width: 100%; height: 100%;
+            display: flex; align-items: center; justify-content: center;
             will-change: transform, opacity;
         }
 
-        /* Layer 1: The Vanishing Point (Sun) */
-        .sun-layer { z-index: 1; }
+        /* THE LIGHT (VANISHING POINT) */
         .sun {
-            width: 30vw; height: 30vw;
-            background: radial-gradient(circle, #fff 0%, #3b82f6 20%, transparent 70%);
-            border-radius: 50%;
-            filter: blur(50px);
-            opacity: 0.6;
+            width: 40vw; height: 40vw;
+            background: radial-gradient(circle, #fff 0%, #3b82f6 30%, transparent 70%);
+            filter: blur(60px); opacity: 0.5; z-index: 1;
         }
 
-        /* Layer 2: Distant Horizon */
-        .horizon-layer { z-index: 2; }
-        .horizon-img {
-            width: 120%; height: 120%;
-            object-fit: cover;
-            filter: grayscale(1) brightness(0.2);
+        /* MOUNTAINS (MID-DISTANCE) */
+        .img-mid {
+            width: 120%; height: 120%; object-fit: cover;
+            filter: grayscale(1) brightness(0.2); z-index: 2;
         }
 
-        /* Layer 3: The Explorer Silhouette (STANDING ON LEDGE) */
-        .explorer-layer { z-index: 3; }
-        .explorer-img {
-            width: 35vw; height: auto;
-            filter: brightness(0); /* Pure black cutout */
-            transform: translateY(15%);
+        /* THE AVATAR (STAYING ON LEDGE) */
+        .img-subject {
+            width: 30vw; filter: brightness(0); z-index: 3;
+            transform: translateY(10%);
         }
 
-        /* Layer 4: Foreground Framing Rocks */
-        .fg-layer { z-index: 4; }
-        .fg-img {
-            width: 160vw;
-            filter: brightness(0);
-            transform: translateY(35%);
+        /* FOREGROUND ROCKS (THE LENS FRAME) */
+        .img-fg {
+            width: 150vw; filter: brightness(0); z-index: 4;
+            transform: translateY(30%);
         }
 
-        /* 2. CONTENT STYLING */
-        .glass {
-            background: rgba(255, 255, 255, 0.02);
-            backdrop-filter: blur(30px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 2rem;
-        }
-
-        html.lenis { height: auto; }
+        .glass { background: rgba(255,255,255,0.02); backdrop-filter: blur(40px); border: 1px solid rgba(255,255,255,0.05); border-radius: 2.5rem; }
     </style>
 </head>
 <body>
 
-    <nav class="fixed top-0 w-full p-10 flex justify-between items-center z-[100] text-white mix-blend-difference">
-        <span class="font-black text-2xl tracking-tighter uppercase">Josh.sys</span>
+    <nav class="fixed top-0 w-full p-10 flex justify-between items-center z-[100] mix-blend-difference">
+        <span class="font-black text-2xl tracking-tighter uppercase">Josh.AI</span>
         <div class="space-x-12 text-xs font-bold tracking-[0.4em] opacity-40 uppercase">
-            <a href="#about">Arch</a>
-            <a href="#lab">Lab</a>
-            <a href="#connect">Init</a>
+            <a href="#about">Systems</a>
+            <a href="#lab">Laboratory</a>
+            <a href="#connect">Initialize</a>
         </div>
     </nav>
 
     <section id="viewport">
-        <div class="layer sun-layer">
-            <div class="sun" id="sun"></div>
+        <div class="layer"><div class="sun" id="sun"></div></div>
+        
+        <div class="layer">
+            <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=2000" class="img-mid" id="mid">
         </div>
 
-        <div class="layer horizon-layer">
-            <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=2000" class="horizon-img" id="img-far">
+        <div class="layer">
+            <img src="https://images.unsplash.com/photo-1551632811-561732d1e306?q=80&w=1000" class="img-subject" id="subject">
         </div>
 
-        <div class="layer explorer-layer">
-            <img src="https://images.unsplash.com/photo-1501503060443-ef41a2c39848?q=80&w=1000" class="explorer-img" id="img-subject">
+        <div class="layer">
+            <img src="https://images.unsplash.com/photo-1443632864897-14973fa006cf?q=80&w=2000" class="img-fg" id="fg">
         </div>
 
-        <div class="layer fg-layer">
-            <img src="https://images.unsplash.com/photo-1443632864897-14973fa006cf?q=80&w=2000" class="fg-img" id="img-fg">
-        </div>
-
-        <div class="absolute bottom-20 w-full text-center z-50" id="hero-tagline">
-            <p class="text-xl md:text-2xl text-slate-400 font-light tracking-tight">
+        <div class="absolute bottom-20 w-full text-center z-50" id="hero-tag">
+            <p class="text-xl md:text-2xl text-slate-400 font-light">
                 Engineering through <span class="text-white">exploration</span>,<br>
                 learning at the speed of <span class="text-white italic">thought.</span>
             </p>
@@ -123,84 +88,70 @@
     </section>
 
     <main class="max-w-7xl mx-auto px-10 space-y-64 pb-64 relative z-10">
-        
-        <section id="about" class="grid md:grid-cols-2 gap-24 items-center pt-40 reveal">
-            <div>
-                <h2 class="text-xs font-bold tracking-[0.5em] text-slate-500 mb-10 uppercase">01. The Architect</h2>
-                <p class="text-5xl md:text-7xl font-black leading-[0.9] tracking-tighter uppercase">
-                    Mapping<br>The Latent<br>Space.
-                </p>
-            </div>
-            <div class="text-slate-400 text-xl font-light leading-relaxed">
-                As an AI Engineer, I view code as a landscape. I build the systems that bridge the gap between unstructured neural intelligence and production-ready architectures.
-            </div>
+        <section id="about" class="pt-40 reveal">
+            <h2 class="text-xs font-bold tracking-[0.5em] text-slate-500 mb-10 uppercase">01. The Architect</h2>
+            <p class="text-5xl md:text-8xl font-black leading-[0.85] tracking-tighter uppercase text-white">
+                Mapping<br>The Latent<br>Space.
+            </p>
         </section>
 
         <section id="lab" class="reveal">
             <h2 class="text-xs font-bold tracking-[0.5em] text-slate-500 mb-16 uppercase">02. The Lab</h2>
             <div class="grid md:grid-cols-2 gap-10">
-                <div class="glass p-16 hover:bg-white hover:text-black transition-all duration-700 group">
-                    <h3 class="text-6xl font-black mb-8 tracking-tighter uppercase">Aether</h3>
-                    <p class="text-xl opacity-60 mb-12">Natural language control of high-inertia browser physics.</p>
+                <div class="glass p-16 hover:bg-white hover:text-black transition-all duration-700">
+                    <h3 class="text-6xl font-black mb-8 tracking-tighter">AETHER</h3>
+                    <p class="text-xl opacity-60">High-inertia physics controlled by LLM reasoning.</p>
                 </div>
-                <div class="glass p-16 hover:bg-white hover:text-black transition-all duration-700 group">
-                    <h3 class="text-6xl font-black mb-8 tracking-tighter uppercase">Mercury</h3>
-                    <p class="text-xl opacity-60 mb-12">Local-first serving of quantized transformer models.</p>
+                <div class="glass p-16 hover:bg-white hover:text-black transition-all duration-700">
+                    <h3 class="text-6xl font-black mb-8 tracking-tighter">MERCURY</h3>
+                    <p class="text-xl opacity-60">Edge-quantized model serving for local-first apps.</p>
                 </div>
             </div>
         </section>
 
         <section id="connect" class="py-60 text-center reveal">
-            <h2 class="text-[12vw] font-black tracking-tighter mb-16 uppercase leading-none">Initialize.</h2>
-            <a href="https://linkedin.com" class="inline-block px-24 py-12 bg-white text-black rounded-full text-3xl font-black shadow-2xl transition-transform duration-500">
+            <h2 class="text-[12vw] font-black tracking-tighter mb-16 uppercase">Initialize.</h2>
+            <a href="https://linkedin.com" class="inline-block px-24 py-12 bg-white text-black rounded-full text-3xl font-black shadow-2xl">
                 CONNECT
             </a>
         </section>
-
     </main>
 
     <script>
-        // 1. Smooth Scroll (Lenis)
         const lenis = new Lenis();
         function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
         requestAnimationFrame(raf);
 
-        // 2. GSAP PARALLAX ENGINE
         gsap.registerPlugin(ScrollTrigger);
 
         const tl = gsap.timeline({
             scrollTrigger: {
                 trigger: "#viewport",
                 start: "top top",
-                end: "+=200%", // Longer scroll = more depth
+                end: "+=250%", // Long scroll for deep immersion
                 scrub: true,
                 pin: true,
                 anticipatePin: 1
             }
         });
 
-        // Layer 1: Sun
-        tl.to("#sun", { scale: 5, opacity: 0, duration: 1 }, 0);
+        tl.to("#sun", { scale: 6, opacity: 0, duration: 1 }, 0);
+        tl.to("#mid", { scale: 2, opacity: 0, duration: 1 }, 0);
 
-        // Layer 2: Distant Mountains
-        tl.to("#img-far", { scale: 1.8, opacity: 0, duration: 1 }, 0);
-
-        // Layer 3: THE EXPLORER (The exact pass-through mechanic)
-        tl.to("#img-subject", { 
-            scale: 12, 
-            y: -400, 
+        // THE AVATAR PASS-THROUGH
+        tl.to("#subject", { 
+            scale: 18, 
+            y: -500, 
             opacity: 0, 
-            filter: "brightness(2) blur(20px)", 
+            filter: "brightness(2) blur(30px)", 
             duration: 0.8 
         }, 0);
 
-        // Layer 4: Foreground Rocks
-        tl.to("#img-fg", { scale: 6, y: -600, opacity: 0, duration: 0.6 }, 0);
+        // THE FOREGROUND ROCKS
+        tl.to("#fg", { scale: 8, y: -800, opacity: 0, duration: 0.6 }, 0);
 
-        // Tagline
-        tl.to("#hero-tagline", { y: 200, opacity: 0, duration: 0.4 }, 0);
+        tl.to("#hero-tag", { y: 200, opacity: 0, duration: 0.4 }, 0);
 
-        // Content Reveals
         document.querySelectorAll('.reveal').forEach(section => {
             gsap.from(section, {
                 scrollTrigger: { trigger: section, start: "top 85%" },
