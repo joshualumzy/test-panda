@@ -15,14 +15,19 @@
         :root { --bg: #050505; --accent: #3b82f6; }
         body { background: var(--bg); color: #fff; margin: 0; overflow-x: hidden; font-family: 'Geist', sans-serif; }
 
-        #hero { height: 100vh; width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        /* HERO - Absolute Centering Fix */
+        #hero { 
+            height: 100vh; width: 100%; 
+            display: flex; flex-direction: column; 
+            align-items: center; justify-content: center; 
+            text-align: center;
+        }
         .cursor { display: inline-block; width: 2px; height: 0.9em; background: #fff; margin-left: 5px; animation: blink 1s step-end infinite; }
         @keyframes blink { 50% { opacity: 0; } }
-        
-        .big-name { font-size: 9vw; font-weight: 900; letter-spacing: -0.06em; line-height: 1; text-transform: uppercase; }
-        .tagline { font-size: 1.5rem; font-weight: 100; color: rgba(255,255,255,0.4); margin-top: 2rem; letter-spacing: 0.05em; }
+        .big-name { font-size: 8vw; font-weight: 900; letter-spacing: -0.05em; line-height: 1; text-transform: uppercase; }
+        .tagline { font-size: 1.25rem; font-weight: 100; color: rgba(255,255,255,0.4); margin-top: 1.5rem; letter-spacing: 0.05em; }
 
-        /* Journey Card Styling */
+        /* JOURNEY CARDS - With White Hover */
         .journey-card { 
             background: rgba(255, 255, 255, 0.02); 
             backdrop-filter: blur(40px); 
@@ -31,30 +36,25 @@
             transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .journey-card:hover { background: #fff; color: #000; border-color: #fff; }
-
-        /* Ideas vs Reality Formatting */
-        .reality-pop { color: var(--accent); font-family: 'Geist Mono', monospace; font-weight: 700; text-shadow: 0 0 20px rgba(59, 130, 246, 0.2); }
-
-        /* The Circular Logo Engine */
-        .circle-logo { 
-            width: 64px; height: 64px; 
-            border-radius: 50%; 
-            background: rgba(255,255,255,0.05); 
-            border: 1px solid rgba(255,255,255,0.1);
-            display: flex; align-items: center; justify-content: center; 
-            transition: all 0.4s ease;
-            flex-shrink: 0;
-            overflow: hidden;
-        }
-        .circle-logo svg { width: 30px; height: 30px; fill: #fff; transition: all 0.4s ease; }
-        
-        /* Hover Logic: Flip colors */
         .journey-card:hover .circle-logo { background: #000; border-color: #000; }
         .journey-card:hover .circle-logo svg { fill: #fff; }
+        .journey-card:hover .text-slate-400 { color: rgba(0,0,0,0.6); }
 
-        /* Tools Section (No white box hover) */
-        .tool-item:hover .circle-logo { border-color: var(--accent); box-shadow: 0 0 20px rgba(59, 130, 246, 0.2); }
+        /* TOOLS SECTION - NO WHITE BOXES */
+        .tool-item { display: flex; align-items: center; gap: 1.5rem; transition: all 0.3s ease; }
+        .tool-item:hover .circle-logo { border-color: var(--accent); background: rgba(59, 130, 246, 0.1); box-shadow: 0 0 30px rgba(59, 130, 246, 0.2); }
         .tool-item:hover span { color: var(--accent); opacity: 1; }
+
+        /* LOGO BASE */
+        .circle-logo { 
+            width: 64px; height: 64px; border-radius: 50%; 
+            background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+            display: flex; align-items: center; justify-content: center; 
+            transition: all 0.4s ease; flex-shrink: 0;
+        }
+        .circle-logo svg { width: 32px; height: 32px; fill: #fff; transition: all 0.4s ease; }
+
+        .reality-pop { color: var(--accent); font-family: 'Geist Mono', monospace; font-weight: 700; text-shadow: 0 0 15px rgba(59, 130, 246, 0.3); }
 
         html.lenis { height: auto; }
     </style>
@@ -72,14 +72,12 @@
     </nav>
 
     <section id="hero">
-        <div class="text-center px-4">
-            <h1 class="big-name">
-                <span class="opacity-10 mr-4 font-light">></span><span id="typewriter"></span><span class="cursor"></span>
-            </h1>
-            <p class="tagline opacity-0" id="tagline">
-                Building with intention, learning at the speed of <span class="text-white font-normal italic">thought.</span>
-            </p>
-        </div>
+        <h1 class="big-name">
+            <span class="opacity-10 mr-4 font-light">></span><span id="typewriter"></span><span class="cursor"></span>
+        </h1>
+        <p class="tagline opacity-0" id="tagline">
+            Building with intention, learning at the speed of <span class="text-white font-normal italic">thought.</span>
+        </p>
     </section>
 
     <main class="max-w-6xl mx-auto px-8 space-y-64 pb-64 relative z-10">
@@ -149,17 +147,11 @@
             <h2 class="text-[10px] font-bold tracking-[0.5em] text-slate-500 mb-16 uppercase">04. Laboratory</h2>
             <div class="grid md:grid-cols-2 gap-8">
                 <a href="#" target="_blank" class="journey-card p-12 block group">
-                    <div class="flex justify-between items-start mb-12">
-                        <h3 class="text-5xl font-black uppercase tracking-tighter italic transition-colors">Aether</h3>
-                        <svg class="opacity-20 group-hover:opacity-100 transition-opacity" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-                    </div>
+                    <h3 class="text-5xl font-black uppercase tracking-tighter italic mb-12">Aether</h3>
                     <p class="opacity-50 font-light text-lg">Project description goes here.</p>
                 </a>
                 <a href="#" target="_blank" class="journey-card p-12 block group">
-                    <div class="flex justify-between items-start mb-12">
-                        <h3 class="text-5xl font-black uppercase tracking-tighter italic transition-colors">Mercury</h3>
-                        <svg class="opacity-20 group-hover:opacity-100 transition-opacity" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-                    </div>
+                    <h3 class="text-5xl font-black uppercase tracking-tighter italic mb-12">Mercury</h3>
                     <p class="opacity-50 font-light text-lg">Project description goes here.</p>
                 </a>
             </div>
@@ -167,18 +159,18 @@
 
         <section id="tools" class="reveal">
             <h2 class="text-[10px] font-bold tracking-[0.5em] text-slate-500 mb-12 uppercase">05. Tools</h2>
-            <div class="flex flex-row items-center gap-12">
-                <div class="tool-item flex items-center gap-6 cursor-default">
+            <div class="flex flex-row items-center gap-16">
+                <div class="tool-item">
                     <div class="circle-logo w-20 h-20">
-                        <svg viewBox="0 0 24 24"><path d="M12 2.697c-5.138 0-9.303 4.165-9.303 9.303 0 5.138 4.165 9.303 9.303 9.303 5.138 0 9.303-4.165 9.303-9.303 0-5.138-4.165-9.303-9.303-9.303zm0 16.924c-4.209 0-7.621-3.412-7.621-7.621 0-4.209 3.412-7.621 7.621-7.621 4.209 0 7.621 3.412 7.621 7.621 0 4.209-3.412 7.621-7.621 7.621zM11.5 7.5l-.5 3.5h2l-.5-3.5h-1zm1 9.5l.5-3.5h-2l.5 3.5h1z"/></svg>
+                        <svg viewBox="0 0 24 24"><path d="M11.996 24C5.373 24 0 18.627 0 12S5.373 0 11.996 0c6.623 0 12 5.373 12 12s-5.377 12-12 12zM12.012 2.1c-5.462 0-9.89 4.432-9.89 9.894s4.428 9.9 9.89 9.9c5.466 0 9.894-4.438 9.894-9.9 0-5.462-4.428-9.894-9.894-9.894zM11.51 7.508c.517.004.994.463 1.002.996.004.53-.42.983-.951.999a.996.996 0 0 1-.996-1.003c0-.525.432-.98 1.006-.992h-.061zm.502 3.492c.276 0 .5.22.5.5v5c0 .28-.224.5-.5.5s-.5-.22-.5-.5v-5c0-.28.224-.5.5-.5z"/></svg>
                     </div>
-                    <span class="text-xs font-bold tracking-[0.3em] opacity-20 transition-all uppercase">PyTorch</span>
+                    <span class="text-xs font-bold tracking-[0.3em] opacity-20 uppercase">PyTorch</span>
                 </div>
-                <div class="tool-item flex items-center gap-6 cursor-default">
+                <div class="tool-item">
                     <div class="circle-logo w-20 h-20">
-                        <svg viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm0 18c-4.411 0-8-3.589-8-8s3.589-8 8-8 8 3.589 8 8-3.589 8-8 8zm-1-12h2v5h3l-4 4-4-4h3V8z"/></svg>
+                        <svg viewBox="0 0 24 24"><path d="M22.017 11.396a.44.44 0 0 0-.44-.44h-5.228l-2.028-4.908a.44.44 0 0 0-.814 0l-2.028 4.908H6.248a.44.44 0 0 0-.44.44c0 .243.197.44.44.44h4.862l-3.328 8.05a.44.44 0 1 0 .814 0l3.328-8.05 3.328 8.05a.44.44 0 1 0 .814 0l3.328-8.05h4.633a.44.44 0 0 0 .44-.44zM12.44 14.887l-1.928-4.664h3.856l-1.928 4.664z"/></svg>
                     </div>
-                    <span class="text-xs font-bold tracking-[0.3em] opacity-20 transition-all uppercase">MySQL</span>
+                    <span class="text-xs font-bold tracking-[0.3em] opacity-20 uppercase">MySQL</span>
                 </div>
             </div>
         </section>
