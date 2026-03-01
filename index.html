@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Josh | Engineering the Frontier</title>
+    <title>Josh | AI Engineering Frontier</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lenis@1.0.45/dist/lenis.min.js"></script>
@@ -12,17 +12,16 @@
     <link href="https://fonts.googleapis.com/css2?family=Geist:wght@100;400;900&display=swap" rel="stylesheet">
 
     <style>
-        :root { --bg: #000; --text: #fff; }
         body {
-            font-family: 'Geist', sans-serif;
-            background-color: var(--bg);
-            color: var(--text);
-            overflow-x: hidden;
+            background-color: #000;
+            color: #fff;
             margin: 0;
+            font-family: 'Geist', sans-serif;
+            overflow-x: hidden;
         }
 
-        /* 1. THE VIEWPORT STACK */
-        #hero-viewport {
+        /* 1. THE 3D VIEWPORT */
+        #viewport {
             position: relative;
             height: 100vh;
             width: 100%;
@@ -30,128 +29,121 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background: #000;
         }
 
         .layer {
             position: absolute;
             width: 100%;
-            height: 100vh;
+            height: 100%;
             display: flex;
             align-items: center;
             justify-content: center;
             will-change: transform, opacity;
         }
 
-        /* Layer 1: The Sun (Deepest) */
-        .layer-sun { z-index: 1; }
-        .sun-glow {
-            width: 40vw; height: 40vw;
-            background: radial-gradient(circle, #fff 0%, #fbbf24 20%, #000 70%);
+        /* Layer 1: The Vanishing Point (Sun) */
+        .sun-layer { z-index: 1; }
+        .sun {
+            width: 30vw; height: 30vw;
+            background: radial-gradient(circle, #fff 0%, #3b82f6 20%, transparent 70%);
             border-radius: 50%;
-            filter: blur(60px);
-            opacity: 0.8;
+            filter: blur(50px);
+            opacity: 0.6;
         }
 
-        /* Layer 2: Distant Peaks */
-        .layer-bg { z-index: 2; }
-        .img-distant {
-            width: 110%; height: 110%;
+        /* Layer 2: Distant Horizon */
+        .horizon-layer { z-index: 2; }
+        .horizon-img {
+            width: 120%; height: 120%;
             object-fit: cover;
-            filter: grayscale(100%) brightness(0.3) contrast(1.2);
+            filter: grayscale(1) brightness(0.2);
         }
 
-        /* Layer 3: The Explorer (Silhouette from behind) */
-        .layer-explorer { z-index: 3; }
+        /* Layer 3: The Explorer Silhouette (STANDING ON LEDGE) */
+        .explorer-layer { z-index: 3; }
         .explorer-img {
-            width: 30vw; height: 40vw;
-            object-fit: cover;
-            filter: grayscale(100%) brightness(0.6) contrast(1.4);
-            /* Masking to create a clean silhouette cutout look */
-            mask-image: radial-gradient(circle at center, black 50%, transparent 80%);
-            -webkit-mask-image: radial-gradient(circle at center, black 50%, transparent 80%);
+            width: 35vw; height: auto;
+            filter: brightness(0); /* Pure black cutout */
+            transform: translateY(15%);
         }
 
-        /* Layer 4: Foreground Rocks (Closest to Camera) */
-        .layer-fg { z-index: 4; }
-        .img-fg {
-            width: 140vw; height: 120vh;
-            object-fit: cover;
-            filter: grayscale(100%) brightness(0.1);
-            transform: translateY(20%);
+        /* Layer 4: Foreground Framing Rocks */
+        .fg-layer { z-index: 4; }
+        .fg-img {
+            width: 160vw;
+            filter: brightness(0);
+            transform: translateY(35%);
         }
 
-        /* 2. UI ELEMENTS */
-        nav { z-index: 100; mix-blend-difference: initial; }
-        .glass { background: rgba(255,255,255,0.03); backdrop-filter: blur(30px); border: 1px solid rgba(255,255,255,0.08); }
+        /* 2. CONTENT STYLING */
+        .glass {
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(30px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 2rem;
+        }
+
         html.lenis { height: auto; }
-        #cursor {
-            width: 8px; height: 8px; background: #fff; border-radius: 50%;
-            position: fixed; pointer-events: none; z-index: 9999;
-            transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-        }
     </style>
 </head>
 <body>
 
-    <div id="cursor"></div>
-
-    <nav class="fixed top-0 w-full p-10 flex justify-between items-center z-[100] text-white">
+    <nav class="fixed top-0 w-full p-10 flex justify-between items-center z-[100] text-white mix-blend-difference">
         <span class="font-black text-2xl tracking-tighter uppercase">Josh.sys</span>
         <div class="space-x-12 text-xs font-bold tracking-[0.4em] opacity-40 uppercase">
-            <a href="#about" class="hover:opacity-100 transition">Arch</a>
-            <a href="#lab" class="hover:opacity-100 transition">Lab</a>
-            <a href="#connect" class="hover:opacity-100 transition">Init</a>
+            <a href="#about">Arch</a>
+            <a href="#lab">Lab</a>
+            <a href="#connect">Init</a>
         </div>
     </nav>
 
-    <div id="hero-viewport">
-        <div class="layer layer-sun">
-            <div class="sun-glow" id="sun"></div>
+    <section id="viewport">
+        <div class="layer sun-layer">
+            <div class="sun" id="sun"></div>
         </div>
 
-        <div class="layer layer-bg">
-            <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&q=80&w=2000" class="img-distant" id="peaks-bg">
+        <div class="layer horizon-layer">
+            <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=2000" class="horizon-img" id="img-far">
         </div>
 
-        <div class="layer layer-explorer">
-            <img src="https://images.unsplash.com/photo-1551632811-561732d1e306?auto=format&fit=crop&q=80&w=1200" class="explorer-img" id="explorer">
+        <div class="layer explorer-layer">
+            <img src="https://images.unsplash.com/photo-1501503060443-ef41a2c39848?q=80&w=1000" class="explorer-img" id="img-subject">
         </div>
 
-        <div class="layer layer-fg">
-            <img src="https://images.unsplash.com/photo-1443632864897-14973fa006cf?auto=format&fit=crop&q=80&w=2000" class="img-fg" id="rocks">
+        <div class="layer fg-layer">
+            <img src="https://images.unsplash.com/photo-1443632864897-14973fa006cf?q=80&w=2000" class="fg-img" id="img-fg">
         </div>
 
-        <div class="absolute bottom-20 w-full text-center z-20 px-6" id="tagline">
-            <p class="text-xl md:text-2xl text-slate-400 font-light max-w-2xl mx-auto leading-snug">
+        <div class="absolute bottom-20 w-full text-center z-50" id="hero-tagline">
+            <p class="text-xl md:text-2xl text-slate-400 font-light tracking-tight">
                 Engineering through <span class="text-white">exploration</span>,<br>
                 learning at the speed of <span class="text-white italic">thought.</span>
             </p>
         </div>
-    </div>
+    </section>
 
     <main class="max-w-7xl mx-auto px-10 space-y-64 pb-64 relative z-10">
         
-        <section id="about" class="grid md:grid-cols-2 gap-24 items-center reveal pt-40">
+        <section id="about" class="grid md:grid-cols-2 gap-24 items-center pt-40 reveal">
             <div>
                 <h2 class="text-xs font-bold tracking-[0.5em] text-slate-500 mb-10 uppercase">01. The Architect</h2>
-                <p class="text-5xl md:text-7xl font-black leading-[0.9] tracking-tighter text-white">
-                    MAPPING<br>THE LATENT<br>SPACE.
+                <p class="text-5xl md:text-7xl font-black leading-[0.9] tracking-tighter uppercase">
+                    Mapping<br>The Latent<br>Space.
                 </p>
             </div>
             <div class="text-slate-400 text-xl font-light leading-relaxed">
-                As an AI Engineer, I view the latent space as the ultimate frontier. I build the systems that bridge the gap between <span class="text-white font-medium">unstructured intelligence</span> and production-ready architectures.
+                As an AI Engineer, I view code as a landscape. I build the systems that bridge the gap between unstructured neural intelligence and production-ready architectures.
             </div>
         </section>
 
         <section id="lab" class="reveal">
             <h2 class="text-xs font-bold tracking-[0.5em] text-slate-500 mb-16 uppercase">02. The Lab</h2>
             <div class="grid md:grid-cols-2 gap-10">
-                <div class="glass p-16 rounded-[3.5rem] group hover:bg-white hover:text-black transition-all duration-700">
+                <div class="glass p-16 hover:bg-white hover:text-black transition-all duration-700 group">
                     <h3 class="text-6xl font-black mb-8 tracking-tighter uppercase">Aether</h3>
                     <p class="text-xl opacity-60 mb-12">Natural language control of high-inertia browser physics.</p>
                 </div>
-                <div class="glass p-16 rounded-[3.5rem] group hover:bg-white hover:text-black transition-all duration-700">
+                <div class="glass p-16 hover:bg-white hover:text-black transition-all duration-700 group">
                     <h3 class="text-6xl font-black mb-8 tracking-tighter uppercase">Mercury</h3>
                     <p class="text-xl opacity-60 mb-12">Local-first serving of quantized transformer models.</p>
                 </div>
@@ -159,8 +151,8 @@
         </section>
 
         <section id="connect" class="py-60 text-center reveal">
-            <h2 class="text-[12vw] font-black tracking-tighter mb-16 uppercase leading-none">INITIALIZE.</h2>
-            <a href="https://linkedin.com" id="mag-btn" class="inline-block px-24 py-12 bg-white text-black rounded-full text-3xl font-black shadow-2xl transition-transform duration-500">
+            <h2 class="text-[12vw] font-black tracking-tighter mb-16 uppercase leading-none">Initialize.</h2>
+            <a href="https://linkedin.com" class="inline-block px-24 py-12 bg-white text-black rounded-full text-3xl font-black shadow-2xl transition-transform duration-500">
                 CONNECT
             </a>
         </section>
@@ -168,71 +160,52 @@
     </main>
 
     <script>
-        // 1. Smooth Scroll
+        // 1. Smooth Scroll (Lenis)
         const lenis = new Lenis();
         function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
         requestAnimationFrame(raf);
 
-        // 2. Cursor
-        const cursor = document.getElementById('cursor');
-        window.addEventListener('mousemove', (e) => {
-            gsap.to(cursor, { x: e.clientX, y: e.clientY, duration: 0.6, ease: "power4.out" });
-        });
-
-        // 3. GSAP PARALLAX ENGINE
+        // 2. GSAP PARALLAX ENGINE
         gsap.registerPlugin(ScrollTrigger);
 
         const tl = gsap.timeline({
             scrollTrigger: {
-                trigger: "#hero-viewport",
+                trigger: "#viewport",
                 start: "top top",
-                end: "+=150%", // How long the flight lasts
+                end: "+=200%", // Longer scroll = more depth
                 scrub: true,
                 pin: true,
                 anticipatePin: 1
             }
         });
 
-        // Layer 1: The Sun (Zooms in slowly)
-        tl.to("#sun", { scale: 3, opacity: 0, duration: 1 }, 0);
+        // Layer 1: Sun
+        tl.to("#sun", { scale: 5, opacity: 0, duration: 1 }, 0);
 
-        // Layer 2: Distant Peaks (Scales out)
-        tl.to("#peaks-bg", { scale: 1.5, opacity: 0, duration: 1 }, 0);
+        // Layer 2: Distant Mountains
+        tl.to("#img-far", { scale: 1.8, opacity: 0, duration: 1 }, 0);
 
-        // Layer 3: THE EXPLORER (Fly-past effect)
-        // We scale him massively to make it feel like the camera goes past his shoulder
-        tl.to("#explorer", { 
-            scale: 6, 
-            y: -200, 
+        // Layer 3: THE EXPLORER (The exact pass-through mechanic)
+        tl.to("#img-subject", { 
+            scale: 12, 
+            y: -400, 
             opacity: 0, 
-            filter: "brightness(1.5) blur(10px)",
+            filter: "brightness(2) blur(20px)", 
             duration: 0.8 
         }, 0);
 
-        // Layer 4: Foreground Rocks (Fly-out fast)
-        tl.to("#rocks", { scale: 4, y: -400, opacity: 0, duration: 0.6 }, 0);
+        // Layer 4: Foreground Rocks
+        tl.to("#img-fg", { scale: 6, y: -600, opacity: 0, duration: 0.6 }, 0);
 
-        // Tagline fade
-        tl.to("#tagline", { y: 100, opacity: 0, duration: 0.4 }, 0);
+        // Tagline
+        tl.to("#hero-tagline", { y: 200, opacity: 0, duration: 0.4 }, 0);
 
-        // Content Reveal Animations
+        // Content Reveals
         document.querySelectorAll('.reveal').forEach(section => {
             gsap.from(section, {
                 scrollTrigger: { trigger: section, start: "top 85%" },
                 y: 100, opacity: 0, duration: 1.5, ease: "power4.out"
             });
-        });
-
-        // Magnetic Button
-        const magBtn = document.getElementById('mag-btn');
-        magBtn.addEventListener('mousemove', (e) => {
-            const rect = magBtn.getBoundingClientRect();
-            const x = (e.clientX - rect.left - rect.width / 2) * 0.4;
-            const y = (e.clientY - rect.top - rect.height / 2) * 0.4;
-            gsap.to(magBtn, { x, y, duration: 0.3 });
-        });
-        magBtn.addEventListener('mouseleave', () => {
-            gsap.to(magBtn, { x: 0, y: 0, duration: 0.8, ease: "elastic.out(1, 0.3)" });
         });
     </script>
 </body>
