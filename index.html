@@ -12,28 +12,17 @@
     <link href="https://fonts.googleapis.com/css2?family=Geist:wght@100;400;900&family=Geist+Mono:wght@400;700&display=swap" rel="stylesheet">
 
     <style>
-        :root { 
-            --bg: #050505; 
-            --accent: #3b82f6; /* Cobalt Signal */
-        }
-        
-        body { 
-            background: var(--bg); 
-            color: #fff; 
-            margin: 0; 
-            overflow-x: hidden; 
-            font-family: 'Geist', sans-serif; 
-        }
+        :root { --bg: #050505; --accent: #3b82f6; }
+        body { background: var(--bg); color: #fff; margin: 0; overflow-x: hidden; font-family: 'Geist', sans-serif; }
 
         /* Hero Styling */
         #hero { height: 100vh; width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; }
         .cursor { display: inline-block; width: 2px; height: 0.9em; background: #fff; margin-left: 5px; animation: blink 1s step-end infinite; }
         @keyframes blink { 50% { opacity: 0; } }
-
         .big-name { font-size: 9vw; font-weight: 900; letter-spacing: -0.06em; line-height: 1; text-transform: uppercase; }
         .tagline { font-size: 1.5rem; font-weight: 100; color: rgba(255,255,255,0.4); margin-top: 2rem; letter-spacing: 0.05em; }
 
-        /* Component Styling */
+        /* Glass Cards */
         .glass-card { 
             background: rgba(255, 255, 255, 0.02); 
             backdrop-filter: blur(40px); 
@@ -42,37 +31,28 @@
             transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        /* 01. Ideas vs Reality Logic */
-        .reality-pop {
-            color: var(--accent);
-            font-family: 'Geist Mono', monospace;
-            font-weight: 700;
-            text-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
-        }
+        /* 01. Reality Formatting */
+        .reality-pop { color: var(--accent); font-family: 'Geist Mono', monospace; font-weight: 700; text-shadow: 0 0 20px rgba(59, 130, 246, 0.3); }
 
         /* Circular Logo Buttons */
         .circle-logo { 
-            width: 60px; height: 60px; 
+            width: 64px; height: 64px; 
             border-radius: 50%; 
             background: rgba(255,255,255,0.03); 
             border: 1px solid rgba(255,255,255,0.1);
             display: flex; align-items: center; justify-content: center; 
-            transition: all 0.5s cubic-bezier(0.2, 1, 0.3, 1);
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            overflow: hidden;
+            font-weight: 900; font-size: 10px; color: rgba(255,255,255,0.2);
         }
-        .circle-logo img { width: 24px; height: 24px; opacity: 0.4; transition: all 0.5s; }
         
-        /* Interactive Hover: The Cobalt Signal */
-        .glass-card:hover {
-            background: rgba(59, 130, 246, 0.03);
-            border-color: rgba(59, 130, 246, 0.4);
-            box-shadow: 0 0 50px rgba(59, 130, 246, 0.1);
-        }
-        .group:hover .circle-logo { 
-            background: var(--accent); 
-            border-color: var(--accent); 
-            transform: scale(1.1) rotate(5deg);
-        }
-        .group:hover .circle-logo img { opacity: 1; filter: brightness(2); }
+        .circle-logo img { width: 30px; height: 30px; filter: grayscale(1) brightness(5); transition: all 0.5s; }
+        
+        /* HOVER: Card turns white, Logo returns to brand color */
+        .group:hover { background: #fff; color: #000; border-color: #fff; }
+        .group:hover .circle-logo { background: #f8f8f8; border-color: rgba(0,0,0,0.1); transform: scale(1.05); }
+        .group:hover .circle-logo img { filter: grayscale(0) brightness(1); }
+        .group:hover .text-slate-400, .group:hover .text-slate-500 { color: rgba(0,0,0,0.6); }
 
         html.lenis { height: auto; }
     </style>
@@ -127,7 +107,7 @@
                 <div class="glass-card p-8 flex flex-col md:flex-row justify-between items-center group">
                     <div class="flex items-center gap-8">
                         <div class="circle-logo">
-                            <img src="https://cdn.simpleicons.org/stackshare/white" alt="Academic">
+                            <img src="https://cdn.simpleicons.org/googlescholar/4285F4" alt="NUS" onerror="this.style.display='none'; this.parentElement.innerHTML='NUS'">
                         </div>
                         <div>
                             <h3 class="text-2xl font-bold uppercase tracking-tight">Masters of Computing</h3>
@@ -139,7 +119,7 @@
                 <div class="glass-card p-8 flex flex-col md:flex-row justify-between items-center group">
                     <div class="flex items-center gap-8">
                         <div class="circle-logo">
-                            <img src="https://cdn.simpleicons.org/tiktok/white" alt="TikTok">
+                            <img src="https://cdn.simpleicons.org/tiktok/000000" alt="TikTok">
                         </div>
                         <div>
                             <h3 class="text-2xl font-bold uppercase tracking-tight">Machine Learning Specialist</h3>
@@ -151,7 +131,7 @@
                 <div class="glass-card p-8 flex flex-col md:flex-row justify-between items-center group">
                     <div class="flex items-center gap-8">
                         <div class="circle-logo">
-                            <img src="https://cdn.simpleicons.org/exxonmobil/white" alt="Exxon">
+                            <img src="https://cdn.simpleicons.org/exxonmobil/EE1F23" alt="Exxon">
                         </div>
                         <div>
                             <h3 class="text-2xl font-bold uppercase tracking-tight">Technical Engineer</h3>
@@ -168,25 +148,21 @@
             <div class="grid md:grid-cols-2 gap-8">
                 <a href="#" target="_blank" class="glass-card p-12 group block relative overflow-hidden">
                     <div class="flex justify-between items-start mb-12">
-                        <h3 class="text-5xl font-black uppercase tracking-tighter group-hover:text-white transition-colors italic">Aether</h3>
-                        <div class="opacity-20 group-hover:opacity-100 group-hover:text-blue-400 transition-all">
+                        <h3 class="text-5xl font-black uppercase tracking-tighter transition-colors italic">Aether</h3>
+                        <div class="opacity-20 group-hover:opacity-100 group-hover:text-blue-500 transition-all">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
                         </div>
                     </div>
-                    <p class="text-slate-500 group-hover:text-slate-300 transition-colors font-light text-lg">
-                        Placeholder text for project description. Describe your technical approach and core achievements within the AI space.
-                    </p>
+                    <p class="text-slate-500 font-light text-lg">Project description goes here.</p>
                 </a>
                 <a href="#" target="_blank" class="glass-card p-12 group block relative overflow-hidden">
                     <div class="flex justify-between items-start mb-12">
-                        <h3 class="text-5xl font-black uppercase tracking-tighter group-hover:text-white transition-colors italic">Mercury</h3>
-                        <div class="opacity-20 group-hover:opacity-100 group-hover:text-blue-400 transition-all">
+                        <h3 class="text-5xl font-black uppercase tracking-tighter transition-colors italic">Mercury</h3>
+                        <div class="opacity-20 group-hover:opacity-100 group-hover:text-blue-500 transition-all">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
                         </div>
                     </div>
-                    <p class="text-slate-500 group-hover:text-slate-300 transition-colors font-light text-lg">
-                        Placeholder text for project description. Highlight model architectures, deployment strategies, or unique engineering solutions.
-                    </p>
+                    <p class="text-slate-500 font-light text-lg">Project description goes here.</p>
                 </a>
             </div>
         </section>
@@ -196,15 +172,15 @@
             <div class="flex flex-wrap items-center gap-12">
                 <div class="group flex items-center gap-4">
                     <div class="circle-logo w-20 h-20">
-                        <img src="https://cdn.simpleicons.org/pytorch/white" alt="PyTorch" class="!w-10 !h-10">
+                        <img src="https://cdn.simpleicons.org/pytorch/EE4C2C" alt="PyTorch" class="!w-10 !h-10">
                     </div>
-                    <span class="text-xs font-bold tracking-[0.3em] opacity-20 group-hover:opacity-100 group-hover:text-blue-400 transition-all uppercase">PyTorch</span>
+                    <span class="text-xs font-bold tracking-[0.3em] opacity-20 group-hover:opacity-100 transition-all uppercase">PyTorch</span>
                 </div>
                 <div class="group flex items-center gap-4">
                     <div class="circle-logo w-20 h-20">
-                        <img src="https://cdn.simpleicons.org/mysql/white" alt="MySQL" class="!w-10 !h-10">
+                        <img src="https://cdn.simpleicons.org/mysql/4479A1" alt="MySQL" class="!w-10 !h-10">
                     </div>
-                    <span class="text-xs font-bold tracking-[0.3em] opacity-20 group-hover:opacity-100 group-hover:text-blue-400 transition-all uppercase">MySQL</span>
+                    <span class="text-xs font-bold tracking-[0.3em] opacity-20 group-hover:opacity-100 transition-all uppercase">MySQL</span>
                 </div>
             </div>
         </section>
@@ -216,12 +192,10 @@
     </main>
 
     <script>
-        // 1. Smooth Scroll
         const lenis = new Lenis();
         function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
         requestAnimationFrame(raf);
 
-        // 2. Typewriter Effect
         const text = "HI, I'M JOSH.";
         let i = 0;
         function type() {
@@ -235,16 +209,12 @@
         }
         window.onload = type;
 
-        // 3. GSAP Logic
         gsap.registerPlugin(ScrollTrigger);
-
-        // Hero Parallax Fade
         gsap.to("#hero", {
             scrollTrigger: { trigger: "#hero", start: "top top", end: "bottom top", scrub: true },
             opacity: 0, y: -50, scale: 0.98
         });
 
-        // Entrance Reveals
         document.querySelectorAll('.reveal').forEach(section => {
             gsap.from(section, {
                 scrollTrigger: { trigger: section, start: "top 85%" },
