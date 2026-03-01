@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Josh | Me</title>
+    <title>Josh | AI Engineering</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lenis@1.0.45/dist/lenis.min.js"></script>
@@ -20,76 +20,106 @@
             overflow-x: hidden;
         }
 
-        /* Osmo Smooth Scroll */
-        html.lenis { height: auto; }
-        .lenis-stopped { overflow: hidden; }
-
-        /* Liquid Cursor */
-        #cursor {
-            width: 18px; height: 18px;
-            background: rgba(0,0,0,1);
-            border-radius: 50%;
-            position: fixed; pointer-events: none;
-            z-index: 9999; mix-blend-mode: difference;
-            transition: transform 0.2s cubic-bezier(0.2, 1, 0.3, 1);
+        /* 1. OSMO PARALLAX LAYERING */
+        #parallax-container {
+            position: relative;
+            height: 150vh; /* Extra height for the scroll duration */
+            width: 100%;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        /* Glassmorphism */
+        .layer {
+            position: absolute;
+            will-change: transform;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Background Layer */
+        .layer-bg { z-index: 1; }
+        .mesh-sphere {
+            width: 60vw; height: 60vw;
+            background: radial-gradient(circle, #dbeafe 0%, transparent 70%);
+            filter: blur(80px);
+            opacity: 0.5;
+        }
+
+        /* Subject Layer (Image) */
+        .layer-subject { z-index: 2; }
+        .subject-img {
+            width: 30vw;
+            aspect-ratio: 4/5;
+            object-fit: cover;
+            border-radius: 1rem;
+            grayscale: 1;
+            box-shadow: 0 50px 100px rgba(0,0,0,0.1);
+        }
+
+        /* Text Layer */
+        .layer-text { z-index: 3; pointer-events: none; }
+        .big-me {
+            font-size: 35vw;
+            font-weight: 900;
+            letter-spacing: -0.05em;
+            text-transform: uppercase;
+            line-height: 0.7;
+        }
+
+        /* General UI Styles */
+        html.lenis { height: auto; }
+        #cursor {
+            width: 12px; height: 12px; background: #000; border-radius: 50%;
+            position: fixed; pointer-events: none; z-index: 9999;
+            mix-blend-mode: difference; transition: transform 0.2s;
+        }
         .glass-card {
             background: rgba(255, 255, 255, 0.4);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(0,0,0,0.04);
+            backdrop-filter: blur(25px); border: 1px solid rgba(0,0,0,0.03);
             border-radius: 1.5rem;
         }
-
-        /* Timeline Interaction */
-        .timeline-item {
-            border-bottom: 1px solid rgba(0,0,0,0.1);
-            transition: padding 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .timeline-item:hover { padding-left: 2.5rem; border-color: #000; }
-        .details {
-            display: grid; grid-template-rows: 0fr;
-            transition: grid-template-rows 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s;
-            opacity: 0;
-        }
+        .timeline-item { border-bottom: 1px solid rgba(0,0,0,0.08); transition: padding 0.5s cubic-bezier(0.19, 1, 0.22, 1); }
+        .timeline-item:hover { padding-left: 2rem; border-color: #000; }
+        .details { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 0.5s, opacity 0.3s; opacity: 0; }
         .timeline-item:hover .details { grid-template-rows: 1fr; opacity: 1; padding-top: 1rem; }
-
-        /* Subtle Gradient Background */
-        .bg-mesh {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle at 80% 20%, #eff6ff 0%, #fafafa 100%);
-            z-index: -1;
-        }
-
-        /* Floating Animation for Tools */
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-        }
-        .tool-chip { animation: float 4s ease-in-out infinite; }
     </style>
 </head>
 <body>
 
     <div id="cursor"></div>
-    <div class="bg-mesh"></div>
 
     <nav class="fixed top-0 w-full p-8 flex justify-between items-center z-50 mix-blend-difference text-white">
-        <span class="font-black text-xl tracking-tighter">JOSH.SYS</span>
-        <div class="space-x-8 text-sm font-bold uppercase tracking-widest opacity-70">
+        <span class="font-black text-xl tracking-tighter">J.SYS</span>
+        <div class="space-x-8 text-xs font-black uppercase tracking-[0.2em] opacity-60">
             <a href="#about" class="hover:opacity-100 transition">ARCH</a>
-            <a href="#projects" class="hover:opacity-100 transition">MODELS</a>
+            <a href="#lab" class="hover:opacity-100 transition">LAB</a>
             <a href="#tools" class="hover:opacity-100 transition">STACK</a>
         </div>
     </nav>
 
-    <section class="h-screen flex flex-col justify-center items-center px-6">
-        <h1 id="hero-title" class="text-[14vw] font-black tracking-tighter leading-[0.8] text-center select-none uppercase">
-            HI, I'M<br><span class="text-transparent" style="-webkit-text-stroke: 1.5px #000;">JOSH.</span>
-        </h1>
-        <div class="mt-12 text-center max-w-2xl">
-            <p class="text-xl md:text-2xl text-slate-400 font-light leading-relaxed tracking-tight">
+    <section id="parallax-container">
+        <div class="layer layer-bg">
+            <div class="mesh-sphere" id="bg-sphere"></div>
+        </div>
+
+        <div class="layer layer-subject">
+            <img src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&q=80&w=800" 
+                 alt="Josh" class="subject-img" id="hero-img">
+        </div>
+
+        <div class="layer layer-text">
+            <h1 class="big-me" id="hero-text">
+                <span style="-webkit-text-stroke: 1.5px #000; color: transparent;">M</span>E
+            </h1>
+        </div>
+
+        <div class="absolute bottom-20 text-center z-[10] w-full">
+            <p class="text-xl md:text-2xl text-slate-400 font-light leading-relaxed">
                 <span class="text-black font-medium">Engineering through exploration</span>,<br>
                 learning at the <span class="text-black font-medium italic">speed of thought.</span>
             </p>
@@ -99,17 +129,15 @@
     <main class="max-w-7xl mx-auto px-6 space-y-64 pb-64">
         
         <section id="about" class="grid md:grid-cols-2 gap-24 items-center reveal">
-            <div class="relative">
-                <div class="aspect-[4/5] glass-card overflow-hidden group">
-                    <img src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&q=80&w=800" 
-                         class="w-full h-full object-cover grayscale transition-all duration-700 group-hover:scale-105 group-hover:grayscale-0">
-                </div>
-            </div>
-            <div>
+            <div class="glass-card p-12">
                 <h2 class="text-5xl font-black mb-10 tracking-tighter uppercase">01. The Architect</h2>
                 <p class="text-2xl font-light leading-snug text-slate-500">
-                    I build the connective tissue between <span class="text-black font-medium">Neural Networks</span> and high-performance interfaces. My focus is on making the complex feel lightweight.
+                    I translate high-dimensional <span class="text-black font-medium">Neural Networks</span> into seamless digital experiences. Specializing in systems that bridge the gap between model inference and production.
                 </p>
+            </div>
+            <div class="text-slate-400 font-light text-xl">
+                Current Focus: <br>
+                <span class="text-black font-medium">RAG Architectures, Latent UI, and Distributed Agentic Workflows.</span>
             </div>
         </section>
 
@@ -123,7 +151,7 @@
                     </div>
                     <div class="details">
                         <div class="overflow-hidden text-xl text-slate-400 max-w-2xl">
-                            Orchestrating multi-agent systems and real-time inference pipelines for distributed developer tools.
+                            Deploying large-scale inference engines and optimizing multi-agent reasoning loops.
                         </div>
                     </div>
                 </div>
@@ -134,27 +162,25 @@
                     </div>
                     <div class="details">
                         <div class="overflow-hidden text-xl text-slate-400 max-w-2xl">
-                            Designed predictive UI components and state machines that react to user intent with zero latency.
+                            Focused on human-in-the-loop interfaces and predictive interaction models.
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="projects" class="reveal">
-            <h2 class="text-5xl font-black mb-16 tracking-tighter uppercase">03. Lab</h2>
-            <div class="grid md:grid-cols-2 gap-12">
+        <section id="lab" class="reveal">
+            <h2 class="text-5xl font-black mb-16 tracking-tighter uppercase">03. The Lab</h2>
+            <div class="grid md:grid-cols-2 gap-10">
                 <div class="glass-card p-12 hover:bg-black hover:text-white transition-all duration-700 group">
-                    <h4 class="text-xs font-black tracking-[0.3em] text-slate-400 group-hover:text-slate-600 mb-6 uppercase">Inference Engine</h4>
                     <h3 class="text-5xl font-black mb-6">AETHER.AI</h3>
-                    <p class="text-xl font-light mb-12 opacity-60">High-inertia motion library controlled by real-time latent space vectors.</p>
-                    <a href="#" class="inline-block border-b-2 border-current pb-2 font-bold tracking-tighter hover:opacity-50 transition">VIEW MODULE</a>
+                    <p class="text-xl font-light mb-12 opacity-60">A real-time inference wrapper for physics-based web interactions.</p>
+                    <a href="#" class="inline-block border-b-2 border-current pb-2 font-bold tracking-tighter">VIEW PROJECT</a>
                 </div>
                 <div class="glass-card p-12 hover:bg-black hover:text-white transition-all duration-700 group">
-                    <h4 class="text-xs font-black tracking-[0.3em] text-slate-400 group-hover:text-slate-600 mb-6 uppercase">Model Edge</h4>
                     <h3 class="text-5xl font-black mb-6">MERCURY.JS</h3>
                     <p class="text-xl font-light mb-12 opacity-60">Quantized transformer serving directly in the browser environment.</p>
-                    <a href="#" class="inline-block border-b-2 border-current pb-2 font-bold tracking-tighter hover:opacity-50 transition">VIEW MODULE</a>
+                    <a href="#" class="inline-block border-b-2 border-current pb-2 font-bold tracking-tighter">VIEW PROJECT</a>
                 </div>
             </div>
         </section>
@@ -162,22 +188,18 @@
         <section id="tools" class="reveal">
             <h2 class="text-5xl font-black mb-20 tracking-tighter text-center uppercase">04. Tools of the Trade</h2>
             <div class="flex flex-wrap justify-center gap-6 max-w-5xl mx-auto">
-                <span class="tool-chip px-10 py-5 glass-card font-black text-xl hover:bg-black hover:text-white transition-all cursor-none" style="animation-delay: 0.1s">PYTORCH</span>
-                <span class="tool-chip px-10 py-5 glass-card font-black text-xl hover:bg-black hover:text-white transition-all cursor-none" style="animation-delay: 0.3s">LANGCHAIN</span>
-                <span class="tool-chip px-10 py-5 glass-card font-black text-xl hover:bg-black hover:text-white transition-all cursor-none" style="animation-delay: 0.5s">NEXT.JS 15</span>
-                <span class="tool-chip px-10 py-5 glass-card font-black text-xl hover:bg-black hover:text-white transition-all cursor-none" style="animation-delay: 0.2s">CUDA</span>
-                <span class="tool-chip px-10 py-5 glass-card font-black text-xl hover:bg-black hover:text-white transition-all cursor-none" style="animation-delay: 0.4s">GSAP</span>
-                <span class="tool-chip px-10 py-5 glass-card font-black text-xl hover:bg-black hover:text-white transition-all cursor-none" style="animation-delay: 0.6s">WEBGPU</span>
+                <span class="px-10 py-5 glass-card font-black text-xl hover:bg-black hover:text-white transition-all cursor-none">PYTORCH</span>
+                <span class="px-10 py-5 glass-card font-black text-xl hover:bg-black hover:text-white transition-all cursor-none">LANGCHAIN</span>
+                <span class="px-10 py-5 glass-card font-black text-xl hover:bg-black hover:text-white transition-all cursor-none">NEXT.JS</span>
+                <span class="px-10 py-5 glass-card font-black text-xl hover:bg-black hover:text-white transition-all cursor-none">WEBGPU</span>
+                <span class="px-10 py-5 glass-card font-black text-xl hover:bg-black hover:text-white transition-all cursor-none">GSAP</span>
             </div>
-            <p class="text-center mt-20 text-slate-400 italic text-lg font-light">
-                Constant tinkering with <span class="text-black">RAG architectures</span> and <span class="text-black">Diffusion models.</span>
-            </p>
         </section>
 
         <section class="py-40 text-center reveal">
             <div class="inline-block relative">
                 <h2 class="text-8xl md:text-[10vw] font-black tracking-tighter mb-16 uppercase">INITIALIZE.</h2>
-                <a href="https://linkedin.com" id="mag-btn" class="inline-block px-20 py-10 bg-black text-white rounded-full text-2xl font-black shadow-2xl hover:scale-105 transition-transform duration-500">
+                <a href="https://linkedin.com" id="mag-btn" class="inline-block px-16 py-8 bg-black text-white rounded-full text-2xl font-black shadow-2xl transition-all duration-300">
                     CONNECT ON LINKEDIN
                 </a>
             </div>
@@ -186,41 +208,53 @@
     </main>
 
     <script>
-        // Initialize Lenis Smooth Scroll
+        // 1. Initialize Lenis
         const lenis = new Lenis();
         function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
         requestAnimationFrame(raf);
 
-        // Liquid Cursor Follower
+        // 2. Liquid Cursor
         const cursor = document.getElementById('cursor');
         window.addEventListener('mousemove', (e) => {
-            gsap.to(cursor, { x: e.clientX - 9, y: e.clientY - 9, duration: 0.6, ease: "power4.out" });
+            gsap.to(cursor, { x: e.clientX - 6, y: e.clientY - 6, duration: 0.5, ease: "power4.out" });
         });
 
-        // Hover expansions for cursor
-        document.querySelectorAll('a, .timeline-item, .tool-chip, #mag-btn').forEach(el => {
-            el.addEventListener('mouseenter', () => cursor.style.transform = 'scale(5)');
+        document.querySelectorAll('a, .timeline-item, #mag-btn').forEach(el => {
+            el.addEventListener('mouseenter', () => cursor.style.transform = 'scale(6)');
             el.addEventListener('mouseleave', () => cursor.style.transform = 'scale(1)');
         });
 
-        // GSAP Animations
+        // 3. OSMO PARALLAX ENGINE (GSAP)
         gsap.registerPlugin(ScrollTrigger);
         
-        // Hero Parallax
-        gsap.to("#hero-title", {
-            scrollTrigger: { trigger: "#hero-title", start: "top center", end: "bottom top", scrub: true },
-            y: -80, opacity: 0.1, scale: 0.95
+        const tl = gsap.timeline({
+            scrollTrigger: {
+                trigger: "#parallax-container",
+                start: "top top",
+                end: "bottom top",
+                scrub: true,
+                pin: true // Stays in place during animation
+            }
         });
 
-        // Section Reveal
+        // Layer 1 (BG) moves slightly
+        tl.to("#bg-sphere", { scale: 1.5, opacity: 0.1, y: 100, duration: 1 }, 0);
+
+        // Layer 2 (Image) scales and fades
+        tl.to("#hero-img", { scale: 1.2, y: -50, filter: "grayscale(0)", duration: 1 }, 0);
+
+        // Layer 3 (Text) zooms in fast
+        tl.to("#hero-text", { scale: 1.8, y: -200, opacity: 0.1, duration: 1 }, 0);
+
+        // 4. Section Reveals
         document.querySelectorAll('.reveal').forEach(section => {
             gsap.from(section, {
                 scrollTrigger: { trigger: section, start: "top 85%" },
-                y: 80, opacity: 0, duration: 1.8, ease: "power4.out"
+                y: 100, opacity: 0, duration: 1.5, ease: "power4.out"
             });
         });
 
-        // Magnetic Button
+        // 5. Magnetic Button
         const magBtn = document.getElementById('mag-btn');
         magBtn.addEventListener('mousemove', (e) => {
             const rect = magBtn.getBoundingClientRect();
