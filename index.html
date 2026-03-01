@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Josh | Engineering the Frontier</title>
+    <title>Josh | AI Engineering Frontier</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lenis@1.0.45/dist/lenis.min.js"></script>
@@ -21,45 +21,57 @@
             margin: 0;
         }
 
-        /* 1. TEXTURAL OVERLAY */
-        .grain {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background-image: url("https://upload.wikimedia.org/wikipedia/commons/7/76/1k_filmgrain.png");
-            opacity: 0.05; pointer-events: none; z-index: 9999;
+        /* 1. SCENE LAYERING */
+        #hero-viewport {
+            position: relative;
+            height: 100vh;
+            width: 100%;
+            overflow: hidden;
+            display: flex;
+            align-items: center; justify-content: center;
+            background: #000;
         }
 
-        /* 2. OSMO LANDSCAPE PINNING */
-        #hero-pin {
-            position: relative; height: 100vh; width: 100%;
-            overflow: hidden; display: flex; align-items: center; justify-content: center;
-        }
-
-        .parallax-layer {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100vh;
+        .layer {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100vh;
             display: flex; align-items: center; justify-content: center;
             will-change: transform, opacity;
         }
 
-        /* Far Background: The Misty Mountains */
-        .layer-1 { z-index: 1; }
-        .bg-landscape {
-            width: 120%; height: 120%; object-fit: cover;
-            filter: grayscale(100%) brightness(0.5) contrast(1.1);
+        /* Layer 1: Distant Misty Peaks */
+        .layer-bg { z-index: 1; }
+        .img-distant {
+            width: 110%; height: 110%;
+            object-fit: cover;
+            filter: grayscale(100%) brightness(0.4);
         }
 
-        /* Middle Ground: The Explorer (Avatar) */
-        .layer-2 { z-index: 2; }
-        .avatar-silhouette {
-            width: 40vw; height: 50vw; object-fit: cover;
-            filter: grayscale(100%) contrast(1.2) brightness(0.8);
-            border-radius: 1rem;
-            box-shadow: 0 50px 100px rgba(0,0,0,0.8);
+        /* Layer 2: Middle Range (The 'Gate') */
+        .layer-mid { z-index: 2; }
+        .img-peaks {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            filter: grayscale(100%) brightness(0.6) contrast(1.2);
+            /* Mask to blend bottom into black */
+            mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
         }
 
-        /* 3. UI COMPONENTS */
+        /* Layer 3: The Explorer (Back-view Silhouette) */
+        .layer-subject { z-index: 3; }
+        .explorer-img {
+            width: 40vw;
+            height: 50vw;
+            object-fit: cover;
+            filter: grayscale(100%) contrast(1.3) brightness(0.7);
+            mask-image: radial-gradient(circle at center, black 40%, transparent 80%);
+        }
+
+        /* 2. UI & CONTENT STYLING */
         html.lenis { height: auto; }
         .glass { background: rgba(255,255,255,0.02); backdrop-filter: blur(30px); border: 1px solid rgba(255,255,255,0.06); }
-
+        
         .timeline-item { border-bottom: 1px solid rgba(255,255,255,0.1); transition: padding 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
         .timeline-item:hover { padding-left: 2rem; border-color: #fff; }
         .details { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 0.5s, opacity 0.3s; opacity: 0; }
@@ -69,6 +81,12 @@
             width: 10px; height: 10px; background: #fff; border-radius: 50%;
             position: fixed; pointer-events: none; z-index: 9999;
             transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .grain {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url("https://upload.wikimedia.org/wikipedia/commons/7/76/1k_filmgrain.png");
+            opacity: 0.04; pointer-events: none; z-index: 9999;
         }
     </style>
 </head>
@@ -86,13 +104,17 @@
         </div>
     </nav>
 
-    <div id="hero-pin">
-        <div class="parallax-layer layer-1">
-            <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&q=80&w=2000" class="bg-landscape" id="img-peaks">
+    <div id="hero-viewport">
+        <div class="layer layer-bg">
+            <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&q=80&w=2000" class="img-distant" id="img-far">
         </div>
 
-        <div class="parallax-layer layer-2">
-            <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&q=80&w=800" class="avatar-silhouette" id="img-avatar">
+        <div class="layer layer-mid">
+            <img src="https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&q=80&w=2000" class="img-peaks" id="img-mid">
+        </div>
+
+        <div class="layer layer-subject">
+            <img src="https://images.unsplash.com/photo-1501503060443-ef41a2c39848?auto=format&fit=crop&q=80&w=800" class="explorer-img" id="img-explorer">
         </div>
 
         <div class="absolute bottom-20 w-full text-center z-20 px-6" id="tagline">
@@ -108,14 +130,12 @@
         <section id="about" class="grid md:grid-cols-2 gap-24 items-center reveal pt-40">
             <div>
                 <h2 class="text-xs font-bold tracking-[0.5em] text-slate-500 mb-10 uppercase">01. The Architect</h2>
-                <p class="text-5xl md:text-6xl font-black leading-[0.95] tracking-tighter text-white">
+                <p class="text-5xl md:text-7xl font-black leading-[0.9] tracking-tighter text-white">
                     MAPPING<br>THE LATENT<br>SPACE.
                 </p>
             </div>
             <div class="text-slate-400 text-xl font-light leading-relaxed">
-                As an AI Engineer, I don't just build tools—I build pathways. I specialize in <span class="text-white font-medium">high-velocity R&D</span> and the orchestration of complex neural architectures.
-                <br><br>
-                Current Focus: <span class="text-white">Multi-Agent Systems, Inference Scaling, and Human-AI Symbiosis.</span>
+                As an AI Engineer, I view the latent space as the ultimate frontier. I build the systems that bridge the gap between <span class="text-white font-medium">unstructured intelligence</span> and production-ready architectures.
             </div>
         </section>
 
@@ -128,7 +148,7 @@
                         <span class="text-slate-500 font-medium italic">2024 — Now</span>
                     </div>
                     <div class="details">
-                        <p class="text-2xl text-slate-400 max-w-3xl">Pioneering agentic reasoning loops and production-grade LLM deployments for globally distributed teams.</p>
+                        <p class="text-2xl text-slate-500 max-w-3xl">Orchestrating production-grade LLM deployments and agentic reasoning loops for globally distributed systems.</p>
                     </div>
                 </div>
                 <div class="timeline-item py-14 cursor-none group">
@@ -137,7 +157,7 @@
                         <span class="text-slate-500 font-medium italic">2021 — 2023</span>
                     </div>
                     <div class="details">
-                        <p class="text-2xl text-slate-400 max-w-3xl">Architecting the bridge between high-performance backends and physics-aware interaction models.</p>
+                        <p class="text-2xl text-slate-500 max-w-3xl">Architecting the intersection between high-performance backends and physics-aware interaction design.</p>
                     </div>
                 </div>
             </div>
@@ -147,14 +167,14 @@
             <h2 class="text-xs font-bold tracking-[0.5em] text-slate-500 mb-16 uppercase">03. The Lab</h2>
             <div class="grid md:grid-cols-2 gap-10">
                 <div class="glass p-16 rounded-[3.5rem] group hover:bg-white hover:text-black transition-all duration-700">
-                    <h3 class="text-6xl font-black mb-8 tracking-tighter">AETHER</h3>
-                    <p class="text-xl opacity-60 mb-12 font-light">Natural language control of high-inertia physics components.</p>
-                    <a href="#" class="inline-block border-b-2 border-current pb-2 font-black tracking-tighter uppercase">View Repo</a>
+                    <h3 class="text-6xl font-black mb-8 tracking-tighter uppercase">Aether</h3>
+                    <p class="text-xl opacity-60 mb-12">Natural language control of high-inertia browser physics.</p>
+                    <a href="#" class="inline-block border-b-2 border-current pb-2 font-black tracking-tighter uppercase">View Project</a>
                 </div>
                 <div class="glass p-16 rounded-[3.5rem] group hover:bg-white hover:text-black transition-all duration-700">
-                    <h3 class="text-6xl font-black mb-8 tracking-tighter">MERCURY</h3>
-                    <p class="text-xl opacity-60 mb-12 font-light">Quantized transformer serving directly in the browser edge.</p>
-                    <a href="#" class="inline-block border-b-2 border-current pb-2 font-black tracking-tighter uppercase">View Repo</a>
+                    <h3 class="text-6xl font-black mb-8 tracking-tighter uppercase">Mercury</h3>
+                    <p class="text-xl opacity-60 mb-12">Local-first serving of quantized transformer models.</p>
+                    <a href="#" class="inline-block border-b-2 border-current pb-2 font-black tracking-tighter uppercase">View Project</a>
                 </div>
             </div>
         </section>
@@ -162,16 +182,16 @@
         <section class="reveal">
             <h2 class="text-xs font-bold tracking-[0.5em] text-slate-500 mb-20 uppercase text-center">04. Tools of the Trade</h2>
             <div class="flex flex-wrap justify-center gap-6 max-w-5xl mx-auto">
-                <span class="px-12 py-7 glass rounded-full font-black text-3xl hover:bg-white hover:text-black transition-all">PYTORCH</span>
-                <span class="px-12 py-7 glass rounded-full font-black text-3xl hover:bg-white hover:text-black transition-all">CUDA</span>
-                <span class="px-12 py-7 glass rounded-full font-black text-3xl hover:bg-white hover:text-black transition-all">LANGCHAIN</span>
-                <span class="px-12 py-7 glass rounded-full font-black text-3xl hover:bg-white hover:text-black transition-all">NEXT.JS</span>
+                <span class="px-12 py-7 glass rounded-full font-black text-3xl hover:bg-white hover:text-black transition-all cursor-none">PYTORCH</span>
+                <span class="px-12 py-7 glass rounded-full font-black text-3xl hover:bg-white hover:text-black transition-all cursor-none">CUDA</span>
+                <span class="px-12 py-7 glass rounded-full font-black text-3xl hover:bg-white hover:text-black transition-all cursor-none">LANGCHAIN</span>
+                <span class="px-12 py-7 glass rounded-full font-black text-3xl hover:bg-white hover:text-black transition-all cursor-none">NEXT.JS</span>
             </div>
         </section>
 
         <section id="connect" class="py-60 text-center reveal">
             <h2 class="text-[12vw] font-black tracking-tighter mb-16 uppercase leading-none">INITIALIZE.</h2>
-            <a href="https://linkedin.com" id="mag-btn" class="inline-block px-24 py-12 bg-white text-black rounded-full text-3xl font-black shadow-2xl transition-transform duration-500 uppercase">
+            <a href="https://linkedin.com" id="mag-btn" class="inline-block px-24 py-12 bg-white text-black rounded-full text-3xl font-black shadow-2xl transition-transform duration-500">
                 CONNECT
             </a>
         </section>
@@ -179,12 +199,12 @@
     </main>
 
     <script>
-        // Smooth Scroll
+        // 1. Smooth Scroll (Lenis)
         const lenis = new Lenis();
         function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
         requestAnimationFrame(raf);
 
-        // Cursor
+        // 2. Cursor Logic
         const cursor = document.getElementById('cursor');
         window.addEventListener('mousemove', (e) => {
             gsap.to(cursor, { x: e.clientX, y: e.clientY, duration: 0.6, ease: "power4.out" });
@@ -194,43 +214,46 @@
             el.addEventListener('mouseleave', () => gsap.to(cursor, { scale: 1, duration: 0.3 }));
         });
 
+        // 3. GSAP Parallax Engine
         gsap.registerPlugin(ScrollTrigger);
 
-        // OSMO MOUNTAIN PARALLAX
         const tl = gsap.timeline({
             scrollTrigger: {
-                trigger: "#hero-pin",
+                trigger: "#hero-viewport",
                 start: "top top",
-                end: "+=150%",
+                end: "+=150%", // How long the effect lasts
                 scrub: true,
                 pin: true,
                 anticipatePin: 1
             }
         });
 
-        // Far mountains scale slightly and fade
-        tl.to("#img-peaks", { scale: 1.4, opacity: 0, duration: 1 }, 0);
+        // Background Scales Out
+        tl.to("#img-far", { scale: 1.5, opacity: 0, duration: 1 }, 0);
         
-        // Explorer scales MASSIVELY (The zoom-through)
-        tl.to("#img-avatar", { 
-            scale: 3.5, 
-            y: -150,
+        // Midground Peaks Zoom In
+        tl.to("#img-mid", { scale: 2.2, y: -100, opacity: 0, duration: 1 }, 0);
+
+        // Explorer (Subject) zooms PASS the camera
+        tl.to("#img-explorer", { 
+            scale: 5, 
+            y: -200, 
             opacity: 0, 
-            filter: "grayscale(0%) brightness(1.3)",
-            duration: 1 
+            duration: 0.8 
         }, 0);
 
-        tl.to("#tagline", { y: 200, opacity: 0, duration: 0.5 }, 0);
+        // Tagline fades
+        tl.to("#tagline", { y: 150, opacity: 0, duration: 0.4 }, 0);
 
-        // Reveals
+        // 4. Section Reveals
         document.querySelectorAll('.reveal').forEach(section => {
             gsap.from(section, {
                 scrollTrigger: { trigger: section, start: "top 85%" },
-                y: 100, opacity: 0, duration: 1.8, ease: "power4.out"
+                y: 100, opacity: 0, duration: 1.5, ease: "power4.out"
             });
         });
 
-        // Magnetic Button
+        // 5. Magnetic Button
         const magBtn = document.getElementById('mag-btn');
         magBtn.addEventListener('mousemove', (e) => {
             const rect = magBtn.getBoundingClientRect();
