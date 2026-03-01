@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Josh | AI Exploration</title>
+    <title>Josh | AI Architect</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lenis@1.0.45/dist/lenis.min.js"></script>
@@ -20,67 +20,75 @@
         }
 
         .layer {
-            position: absolute; width: 100%; height: 100%;
+            position: absolute; width: 100%; height: 100vh;
             display: flex; align-items: center; justify-content: center;
             will-change: transform, opacity;
         }
 
-        /* THE LIGHT (VANISHING POINT) */
-        .sun {
-            width: 40vw; height: 40vw;
-            background: radial-gradient(circle, #fff 0%, #3b82f6 30%, transparent 70%);
-            filter: blur(60px); opacity: 0.5; z-index: 1;
+        /* 1. THE DATA CORE (Deepest) */
+        .core-glow {
+            width: 50vw; height: 50vw;
+            background: radial-gradient(circle, #fff 0%, #6366f1 30%, transparent 70%);
+            filter: blur(100px); opacity: 0.7; z-index: 1;
         }
 
-        /* MOUNTAINS (MID-DISTANCE) */
-        .img-mid {
+        /* 2. THE DIGITAL HORIZON (Cybercity/Grid) */
+        .img-grid {
             width: 120%; height: 120%; object-fit: cover;
-            filter: grayscale(1) brightness(0.2); z-index: 2;
+            filter: grayscale(1) invert(1) brightness(0.15) opacity(0.3); z-index: 2;
         }
 
-        /* THE AVATAR (STAYING ON LEDGE) */
-        .img-subject {
-            width: 30vw; filter: brightness(0); z-index: 3;
-            transform: translateY(10%);
+        /* 3. THE NEURAL NODE (Avatar Replacement) */
+        .neural-orb {
+            width: 25vw; height: 25vw;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            z-index: 3;
+            box-shadow: 0 0 50px rgba(99, 102, 241, 0.2);
         }
 
-        /* FOREGROUND ROCKS (THE LENS FRAME) */
-        .img-fg {
-            width: 150vw; filter: brightness(0); z-index: 4;
-            transform: translateY(30%);
+        /* 4. FLOATING CODE (Foreground) */
+        .code-fragment {
+            font-family: monospace; font-size: 10vw; font-weight: 900;
+            color: rgba(255, 255, 255, 0.05); z-index: 4;
+            white-space: nowrap; pointer-events: none;
         }
 
-        .glass { background: rgba(255,255,255,0.02); backdrop-filter: blur(40px); border: 1px solid rgba(255,255,255,0.05); border-radius: 2.5rem; }
+        .glass { background: rgba(255,255,255,0.02); backdrop-filter: blur(40px); border: 1px solid rgba(255,255,255,0.05); border-radius: 2rem; }
     </style>
 </head>
 <body>
 
-    <nav class="fixed top-0 w-full p-10 flex justify-between items-center z-[100] mix-blend-difference">
+    <nav class="fixed top-0 w-full p-10 flex justify-between items-center z-[100]">
         <span class="font-black text-2xl tracking-tighter uppercase">Josh.AI</span>
         <div class="space-x-12 text-xs font-bold tracking-[0.4em] opacity-40 uppercase">
-            <a href="#about">Systems</a>
+            <a href="#about">Architecture</a>
             <a href="#lab">Laboratory</a>
             <a href="#connect">Initialize</a>
         </div>
     </nav>
 
     <section id="viewport">
-        <div class="layer"><div class="sun" id="sun"></div></div>
+        <div class="layer"><div class="core-glow" id="core"></div></div>
         
         <div class="layer">
-            <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=2000" class="img-mid" id="mid">
+            <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2000" class="img-grid" id="grid">
         </div>
 
         <div class="layer">
-            <img src="https://images.unsplash.com/photo-1551632811-561732d1e306?q=80&w=1000" class="img-subject" id="subject">
+            <div class="neural-orb" id="node">
+                <span class="text-white/20 text-xs tracking-widest uppercase">Node 0x1</span>
+            </div>
         </div>
 
-        <div class="layer">
-            <img src="https://images.unsplash.com/photo-1443632864897-14973fa006cf?q=80&w=2000" class="img-fg" id="fg">
+        <div class="layer" id="code-layer">
+            <div class="code-fragment">010110 011001 110101</div>
         </div>
 
         <div class="absolute bottom-20 w-full text-center z-50" id="hero-tag">
-            <p class="text-xl md:text-2xl text-slate-400 font-light">
+            <p class="text-xl md:text-2xl text-slate-500 font-light">
                 Engineering through <span class="text-white">exploration</span>,<br>
                 learning at the speed of <span class="text-white italic">thought.</span>
             </p>
@@ -91,7 +99,10 @@
         <section id="about" class="pt-40 reveal">
             <h2 class="text-xs font-bold tracking-[0.5em] text-slate-500 mb-10 uppercase">01. The Architect</h2>
             <p class="text-5xl md:text-8xl font-black leading-[0.85] tracking-tighter uppercase text-white">
-                Mapping<br>The Latent<br>Space.
+                BUILDING<br>IN THE<br>LATENT.
+            </p>
+            <p class="text-2xl text-slate-400 mt-10 max-w-2xl font-light">
+                I translate high-dimensional neural logic into production-grade systems. I build at the intersection of architecture and intent.
             </p>
         </section>
 
@@ -99,19 +110,19 @@
             <h2 class="text-xs font-bold tracking-[0.5em] text-slate-500 mb-16 uppercase">02. The Lab</h2>
             <div class="grid md:grid-cols-2 gap-10">
                 <div class="glass p-16 hover:bg-white hover:text-black transition-all duration-700">
-                    <h3 class="text-6xl font-black mb-8 tracking-tighter">AETHER</h3>
-                    <p class="text-xl opacity-60">High-inertia physics controlled by LLM reasoning.</p>
+                    <h3 class="text-6xl font-black mb-8 tracking-tighter uppercase">AETHER</h3>
+                    <p class="text-xl opacity-60">Real-time LLM orchestration for physics-based environments.</p>
                 </div>
                 <div class="glass p-16 hover:bg-white hover:text-black transition-all duration-700">
-                    <h3 class="text-6xl font-black mb-8 tracking-tighter">MERCURY</h3>
-                    <p class="text-xl opacity-60">Edge-quantized model serving for local-first apps.</p>
+                    <h3 class="text-6xl font-black mb-8 tracking-tighter uppercase">MERCURY</h3>
+                    <p class="text-xl opacity-60">Edge-serving of quantized models for sub-10ms inference.</p>
                 </div>
             </div>
         </section>
 
         <section id="connect" class="py-60 text-center reveal">
-            <h2 class="text-[12vw] font-black tracking-tighter mb-16 uppercase">Initialize.</h2>
-            <a href="https://linkedin.com" class="inline-block px-24 py-12 bg-white text-black rounded-full text-3xl font-black shadow-2xl">
+            <h2 class="text-[12vw] font-black tracking-tighter mb-16 uppercase">INITIALIZE.</h2>
+            <a href="https://linkedin.com" class="px-24 py-12 bg-white text-black rounded-full text-3xl font-black shadow-2xl transition-transform duration-500">
                 CONNECT
             </a>
         </section>
@@ -128,27 +139,28 @@
             scrollTrigger: {
                 trigger: "#viewport",
                 start: "top top",
-                end: "+=250%", // Long scroll for deep immersion
+                end: "+=200%", 
                 scrub: true,
                 pin: true,
                 anticipatePin: 1
             }
         });
 
-        tl.to("#sun", { scale: 6, opacity: 0, duration: 1 }, 0);
-        tl.to("#mid", { scale: 2, opacity: 0, duration: 1 }, 0);
+        // The "Data Flight" Physics
+        tl.to("#core", { scale: 5, opacity: 0, duration: 1 }, 0);
+        tl.to("#grid", { scale: 1.8, opacity: 0, duration: 1 }, 0);
 
-        // THE AVATAR PASS-THROUGH
-        tl.to("#subject", { 
-            scale: 18, 
-            y: -500, 
+        // FLY PAST THE NEURAL NODE
+        tl.to("#node", { 
+            scale: 25, 
             opacity: 0, 
-            filter: "brightness(2) blur(30px)", 
+            rotation: 45,
+            filter: "blur(50px)", 
             duration: 0.8 
         }, 0);
 
-        // THE FOREGROUND ROCKS
-        tl.to("#fg", { scale: 8, y: -800, opacity: 0, duration: 0.6 }, 0);
+        // FLY PAST THE CODE
+        tl.to("#code-layer", { scale: 10, y: -800, opacity: 0, duration: 0.6 }, 0);
 
         tl.to("#hero-tag", { y: 200, opacity: 0, duration: 0.4 }, 0);
 
